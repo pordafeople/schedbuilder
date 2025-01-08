@@ -17,8 +17,9 @@ type Weekday = string
 
 function parse_weekdays(text: string): Weekday[] {
     // can this array creation be skipped?
+    const re = /[MTWFS]|Th/g
     const weekdays = []
-    for (const match of text.matchAll(/[MTWFS]|Th/)) {
+    for (const match of text.matchAll(re)) {
         weekdays.push(match[0])
     }
     return weekdays
@@ -31,7 +32,7 @@ type ClassPeriod = {
     weekdays: Weekday[],
 }
 
-const period_regex = /(\d+:\d+[AP])-(\d+:\d+[AP]) ([\w]+) (\w+)/
+const period_regex = /(\d+:\d+[AP])-(\d+:\d+[AP]) ([\w]+) (\w+)/g
 function parse_period(match: RegExpExecArray): ClassPeriod {
     return {
         start: parse_time(match[1]),
@@ -61,7 +62,7 @@ type Teacher = {
 type Emails = string[]
 
 function parse_emails(emails: string): Emails {
-    const re = /[\w]+@[\w.]+/
+    const re = /[\w]+@[\w.]+/g
     const out = []
     for (const match of emails.matchAll(re)) {
         out.push(match[0])
@@ -71,11 +72,11 @@ function parse_emails(emails: string): Emails {
 
 function parse_teacher(name: string, emails: string): Teacher {
     const re = /([\w]+), ([\w ]+)(?:\n([\w@ .]+))?/
-    const match = name.match(re)!
+    const match = name.match(re) || null
     return {
-        family_name: match[1],
-        given_name: match[2],
-        emails: parse_emails(emails),
+        family_name: match?.[1] || '<???>',
+        given_name: match?.[2] || '<???>',
+        emails: parse_emails(emails || ''),
     }
 }
 
@@ -98,7 +99,7 @@ function parse_subject(match: RegExpExecArray): SubjectData {
         subj_no: match[2],
         title: match[3],
         subj_sched: parse_schedule(match[4]),
-        teacher: parse_teacher(match[5], match[6]),
+        teacher: parse_teacher(match[5] || '', match[6]),
     }
 }
 
@@ -106,7 +107,7 @@ type SisData = {
     subjects: SubjectData[]
 }
 
-function parse_sis(text: string): SisData {
+export function parse_sis(text: string): SisData {
     const subjects = []
     for (const match of text.matchAll(subject_regex)) {
         subjects.push(parse_subject(match))

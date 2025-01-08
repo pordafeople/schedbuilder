@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { parse_sis } from './parser'
 
 function InputBox() {
   const [text, setText] = useState('<insert name>')
@@ -9,8 +10,10 @@ function InputBox() {
       cols={80}
       rows={20}
       onChange={(e) => {
-        console.log('changed: ', e.target.value)
-        setText(e.target.value)
+        const value = e.target.value
+        // console.log('changed: ', value)
+        console.log(parse_sis(value))
+        setText(value)
       }}
     >
       {text}

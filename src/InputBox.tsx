@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { parse_sis } from './parser'
+import { parse_sis } from './process/parse'
 
 function InputBox() {
   const [text, setText] = useState('<insert name>')

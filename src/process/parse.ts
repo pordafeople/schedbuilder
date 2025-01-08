@@ -1,4 +1,7 @@
-type Time = {
+// i could've structured it like an actual parser to avoid all the nested regex stuff
+// but we're here and it kinda works so
+
+export type Time = {
     hour: number,
     minute: number,
 }
@@ -13,7 +16,7 @@ function parse_time(text: string): Time {
     }
 }
 
-type Weekday = string
+export type Weekday = string
 
 function parse_weekdays(text: string): Weekday[] {
     // can this array creation be skipped?
@@ -25,7 +28,7 @@ function parse_weekdays(text: string): Weekday[] {
     return weekdays
 }
 
-type ClassPeriod = {
+export type ClassPeriod = {
     start: Time,
     end: Time,
     room: string,
@@ -42,7 +45,7 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
     }
 }
 
-type SubjectSchedule = ClassPeriod[]
+export type SubjectSchedule = ClassPeriod[]
 
 function parse_schedule(text: string): SubjectSchedule {
     const periods = []
@@ -53,13 +56,13 @@ function parse_schedule(text: string): SubjectSchedule {
 
 }
 
-type Teacher = {
+export type Teacher = {
     family_name: string,
     given_name: string,
     emails: string[],
 }
 
-type Emails = string[]
+export type Emails = string[]
 
 function parse_emails(emails: string): Emails {
     const re = /[\w]+@[\w.]+/g
@@ -81,7 +84,7 @@ function parse_teacher(name: string, emails: string): Teacher {
 }
 
 // CODE	SUBJ. NO	DESCRIPTIVE TITLE	SCHEDULE	TEACHER	UNIT	Required
-type SubjectData = {
+export type SubjectData = {
     /**
      * Usable as a primary key.
      */
@@ -103,7 +106,7 @@ function parse_subject(match: RegExpExecArray): SubjectData {
     }
 }
 
-type SisData = {
+export type SisData = {
     subjects: SubjectData[]
 }
 

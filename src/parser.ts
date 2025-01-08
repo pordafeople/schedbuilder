@@ -17,7 +17,7 @@ type Weekday = string
 
 function parse_weekdays(text: string): Weekday[] {
     // can this array creation be skipped?
-    const re = /[MTWFS]|Th/g
+    const re = /Th|[MTWFS]/g
     const weekdays = []
     for (const match of text.matchAll(re)) {
         weekdays.push(match[0])
@@ -32,7 +32,7 @@ type ClassPeriod = {
     weekdays: Weekday[],
 }
 
-const period_regex = /(\d+:\d+[AP])-(\d+:\d+[AP]) ([\w]+) (\w+)/g
+const period_regex = /(\d+:\d+[AP])-(\d+:\d+[AP]) ([A-Z](?:[a-z]+ )?\w+) (\w+)/g
 function parse_period(match: RegExpExecArray): ClassPeriod {
     return {
         start: parse_time(match[1]),

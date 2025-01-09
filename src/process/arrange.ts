@@ -75,13 +75,17 @@ export function arrange(data: SisData): { subjects: SubjectData[], schedule: Sch
             const rowspan = end_row - start_row
             console.log(subj_slot.start, start_row, subj_slot.end, end_row)
             for (const weekday of subj_slot.weekdays) {
-                table[start_row].columns[weekday_index(weekday)] = {
+                const col = weekday_index(weekday)
+                table[start_row].columns[col] = {
                     data: {
                         type: 'subject',
                         subject,
                     },
                     colspan: 1,
                     rowspan,
+                }
+                for (let row = start_row + 1; row < end_row; row++) {
+                    table[row].columns[col] = null
                 }
             }
         }

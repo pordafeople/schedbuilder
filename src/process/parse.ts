@@ -16,17 +16,23 @@ function parse_time(text: string): Time {
     }
 }
 
+export function time_minutes(time: Time): number {
+    return time.hour * 60 + time.minute
+}
+
+
 export type Weekday = string
+const WEEKDAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa']
 
 function parse_weekdays(text: string): Weekday[] {
-    // can this array creation be skipped?
-    const re = /Th|[MTWFS]/g
-    const weekdays = []
-    for (const match of text.matchAll(re)) {
-        weekdays.push(match[0])
-    }
-    return weekdays
+    const re = /Th|Sa|[MTWF]/g;
+    return [...text.matchAll(re)].map(match => match[0]);
 }
+
+export function weekday_value(weekday: Weekday): number {
+    return WEEKDAYS.indexOf(weekday)
+}
+
 
 export type ClassPeriod = {
     start: Time,
@@ -45,32 +51,27 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
     }
 }
 
+
 export type SubjectSchedule = ClassPeriod[]
 
 function parse_schedule(text: string): SubjectSchedule {
-    const periods = []
-    for (const match of text.matchAll(period_regex)) {
-        periods.push(parse_period(match))
-    }
-    return periods
+    return [...text.matchAll(period_regex)].map(parse_period)
 
 }
 
-export type Teacher = {
-    family_name: string,
-    given_name: string,
-    emails: string[],
-}
 
 export type Emails = string[]
 
 function parse_emails(emails: string): Emails {
     const re = /[\w]+@[\w.]+/g
-    const out = []
-    for (const match of emails.matchAll(re)) {
-        out.push(match[0])
-    }
-    return out
+    return [...emails.matchAll(re)].map(match => match[0])
+}
+
+
+export type Teacher = {
+    family_name: string,
+    given_name: string,
+    emails: Emails,
 }
 
 function parse_teacher(name: string, emails: string): Teacher {
@@ -82,6 +83,7 @@ function parse_teacher(name: string, emails: string): Teacher {
         emails: parse_emails(emails || ''),
     }
 }
+
 
 // CODE	SUBJ. NO	DESCRIPTIVE TITLE	SCHEDULE	TEACHER	UNIT	Required
 export type SubjectData = {
@@ -106,14 +108,11 @@ function parse_subject(match: RegExpExecArray): SubjectData {
     }
 }
 
+
 export type SisData = {
     subjects: SubjectData[]
 }
 
 export function parse_sis(text: string): SisData {
-    const subjects = []
-    for (const match of text.matchAll(subject_regex)) {
-        subjects.push(parse_subject(match))
-    }
-    return { subjects }
+    return { subjects: [...text.matchAll(subject_regex)].map(parse_subject) }
 }

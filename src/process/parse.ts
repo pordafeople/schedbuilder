@@ -120,5 +120,5 @@ export type SisData = {
 }
 
 export function parse_sis(text: string): SisData {
-    return { subjects: [...text.matchAll(subject_regex)].map(parse_subject) }
+    return { subjects: [...text.replace(/\r/g, '').matchAll(subject_regex)].map(parse_subject) }
 }

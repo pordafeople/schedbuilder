@@ -2,17 +2,25 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Subject from './Subject'
 import InputBox from './InputBox'
+import Schedule from './render/Schedule'
+import { parse_sis } from './process/parse'
+import { arrange } from './process/arrange'
+import { sample_text } from './render/sampleinput'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [text, setText] = useState(sample_text)
+
+  const parsed = parse_sis(text)
+  const { classes: _, schedule } = arrange(parsed)
 
   return (
     <>
       <div>
-        <Subject />
-        <InputBox />
+        <InputBox text={text} setText={setText} />
+        <br />
+        <Schedule {...schedule} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

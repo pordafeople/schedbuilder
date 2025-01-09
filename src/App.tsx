@@ -12,7 +12,7 @@ function App() {
   const [count, setCount] = useState(0)
   const [text, setText] = useState('<Loading sample text...>')
   useEffect(() => {
-    fetch('../ignore/input.txt')
+    fetch('../src/render/input.txt')
       .then((res) => res.text())
       .then((value) => setText(value))
       .catch((_e) => setText('<Failed to load sample text.>'))

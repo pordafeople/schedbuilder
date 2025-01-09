@@ -57,7 +57,7 @@ function get_times(data: SisData): Time[] {
     return sort_by_key(times, time_minutes).filter(dedup_filter)
 }
 
-export function arrange(data: SisData): ScheduleTable {
+export function arrange(data: SisData): { subjects: SubjectData[], schedule: ScheduleTable } {
     const table: ScheduleRow[] = []
     const times = get_times(data)
     let prev_time = times[0]
@@ -87,5 +87,5 @@ export function arrange(data: SisData): ScheduleTable {
             }
         }
     }
-    return { table }
+    return { subjects: [], schedule: { table } }
 }

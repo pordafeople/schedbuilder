@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   const parsed = parse_sis(text)
-  const arranged = arrange(parsed)
+  const { subjects, schedule } = arrange(parsed)
 
   return (
     <>
@@ -28,7 +28,7 @@ function App() {
         <Subject />
         <InputBox text={text} setText={setText} />
         <br />
-        <Schedule {...arranged} />
+        <Schedule {...schedule} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

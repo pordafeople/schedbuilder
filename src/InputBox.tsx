@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 type InputBoxProps = {
   text: string
   setText: (value: string) => void

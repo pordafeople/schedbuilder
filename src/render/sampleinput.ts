@@ -50,9 +50,9 @@ export const sample_table: ScheduleTable = {
             size: 60,
             columns: [
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
-                // <this> slot occupied by tile with rowspan
+                null,
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
-                // <this> slot occupied by tile with rowspan
+                null,
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
             ]

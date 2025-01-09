@@ -1,8 +1,8 @@
 // apologies in advance for my C style
 
-import { SisData, SubjectData, Time, time_minutes, time_str, Weekday, weekday_value } from './parse'
+import { SisData, SubjectData, Time, time_minutes, time_str, Weekday, weekday_index } from './parse'
 
-export type TimeSlot = {
+export type TimeSlot = null | {
     data:
         | { type: 'subject', subject: SubjectData }
         | { type: 'bar', text: string }
@@ -38,7 +38,7 @@ function get_weekdays(data: SisData): Weekday[] {
             }
         }
     }
-    return sort_by_key(out, weekday_value).filter(dedup_filter)
+    return sort_by_key(out, weekday_index).filter(dedup_filter)
 }
 
 function get_times(data: SisData): Time[] {
@@ -71,7 +71,7 @@ export function arrange(data: SisData): ScheduleTable {
             const end_row = times.indexOf(subj_slot.end)
             const rowspan = end_row - start_row
             for (const weekday of subj_slot.weekdays) {
-                table[start_row].columns[weekday_value(weekday)] = {
+                table[start_row].columns[weekday_index(weekday)] = {
                     data: {
                         type: 'subject',
                         subject,

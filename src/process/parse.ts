@@ -93,10 +93,9 @@ function parse_teacher(name: string, emails: string): Teacher {
 
 
 // CODE	SUBJ. NO	DESCRIPTIVE TITLE	SCHEDULE	TEACHER	UNIT	Required
+/** Data for a single class of a course. */
 export type SubjectData = {
-    /**
-     * Usable as a primary key.
-     */
+    /** The class code. Usable as a primary key. */
     code: string
     subj_no: string
     title: string

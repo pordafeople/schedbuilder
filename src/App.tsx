@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,12 +9,19 @@ import { sample_table } from './render/sampleinput'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [text, setText] = useState('<Loading sample text...>')
+  useEffect(() => {
+    fetch('../ignore/input.txt')
+      .then((res) => res.text())
+      .then((value) => setText(value))
+      .catch((_e) => setText('<Failed to load sample text.>'))
+  }, [])
 
   return (
     <>
       <div>
         <Subject />
-        <InputBox />
+        <InputBox text={text} setText={setText} />
         <Schedule {...sample_table} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

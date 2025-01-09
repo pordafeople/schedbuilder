@@ -9,35 +9,50 @@ export type Time = {
 function parse_time(text: string): Time {
     const re = /(\d+):(\d+)([AP])/
     const match = text.match(re)!
-    const am_pm_offset = match[3] == 'A' ? 0 : 12
+    const am_pm_offset = match[3] === 'A' ? 0 : 12
     return {
-        hour: parseInt(match[1]) + am_pm_offset,
+        hour: parseInt(match[1]) % 12 + am_pm_offset,
         minute: parseInt(match[2]),
     }
 }
 
 export function time_str(time: Time): string {
     const am_pm = time.hour < 12 ? 'A' : 'P'
-    const hour = (time.hour % 12).toString()
+    const hour = ((time.hour + 11) % 12 + 1).toString()
     const minute = time.minute.toString().padStart(2, '0')
     return `${hour}:${minute}${am_pm}`
 }
 
-export function time_minutes(time: Time): number {
+export type TimeMinutes = number
+
+export function time_minutes(time: Time): TimeMinutes {
     return time.hour * 60 + time.minute
+}
+
+export function minutes_time(minutes: TimeMinutes): Time {
+    return {
+        hour: Math.floor(minutes / 60),
+        minute: minutes % 60,
+    }
 }
 
 
 export type Weekday = string
-const WEEKDAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa']
+const WEEKDAYS = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa']
 
 function parse_weekdays(text: string): Weekday[] {
-    const re = /Th|Sa|[MTWF]/g;
+    const re = /Th|Sa|[SMTWF]/g;
     return [...text.matchAll(re)].map(match => match[0]);
 }
 
-export function weekday_value(weekday: Weekday): number {
+export type WeekdayIndex = number
+
+export function weekday_index(weekday: Weekday): WeekdayIndex {
     return WEEKDAYS.indexOf(weekday)
+}
+
+export function index_weekday(index: WeekdayIndex): Weekday {
+    return WEEKDAYS[index]
 }
 
 

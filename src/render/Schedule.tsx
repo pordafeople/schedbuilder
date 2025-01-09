@@ -9,6 +9,10 @@ function Schedule({ table }: ScheduleTable) {
     out += time_str(row.time) + ':\t'
     for (const tile of row.columns) {
       // console.log(tile.colspan, tile.rowspan)
+      if (tile === null) {
+        out += '[^^^^^]\t'
+        continue
+      }
       const data = tile.data
       switch (data.type) {
         case 'subject':
@@ -20,7 +24,7 @@ function Schedule({ table }: ScheduleTable) {
           // console.log(data.text)
           break
         case 'empty':
-          out += '"..."\t'
+          out += '.\t'
           // console.log('empty')
           break
       }

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Subject from './Subject'
 import InputBox from './InputBox'
 import Schedule from './render/Schedule'
 import { sample_table } from './render/sampleinput'
@@ -20,12 +19,11 @@ function App() {
   }, [])
 
   const parsed = parse_sis(text)
-  const { subjects, schedule } = arrange(parsed)
+  const { classes, schedule } = arrange(parsed)
 
   return (
     <>
       <div>
-        <Subject />
         <InputBox text={text} setText={setText} />
         <br />
         <Schedule {...schedule} />

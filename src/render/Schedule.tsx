@@ -15,17 +15,14 @@ function Schedule({ table }: ScheduleTable) {
       }
       const data = tile.data
       switch (data.type) {
-        case 'subject':
-          out += '"' + data.subject.code + '"\t'
-          // console.log(data.subject)
+        case 'class':
+          out += '"' + data.class_code + '"\t'
           break
         case 'bar':
           out += '"' + data.text + '"\t'
-          // console.log(data.text)
           break
         case 'empty':
           out += '.\t'
-          // console.log('empty')
           break
       }
     }

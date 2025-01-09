@@ -71,9 +71,9 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
     }
 }
 
-export type SubjectSchedule = ClassPeriod[]
+export type ClassSchedule = ClassPeriod[]
 
-function parse_schedule(text: string): SubjectSchedule {
+function parse_schedule(text: string): ClassSchedule {
     return [...text.matchAll(period_regex)].map(parse_period)
 }
 
@@ -100,34 +100,37 @@ function parse_teacher(name: string, emails: string): Teacher {
     }
 }
 
+export type ClassCode = string
+export type Subject = string
+
 // CODE	SUBJ. NO	DESCRIPTIVE TITLE	SCHEDULE	TEACHER	UNIT	Required
-/** Data for a single class of a course. */
-export type SubjectData = {
+export type ClassData = {
     /** The class code. Usable as a primary key. */
-    code: string
-    subj_no: string
+    code: ClassCode
+    subject: Subject
     title: string
-    subj_sched: SubjectSchedule
+    schedule: ClassSchedule
     teacher: Teacher
 }
 
-const subject_regex =
+const class_regex =
     /^(\d+-\d+)\s?(\w+ \d+)\s?([\w, \-\d]+)\s?\* ((?:.+? \*)+)\s?([\w, ]+)?\s?([a-z@\.;]+)?\s?(\d)\/(\d)\s?$/gm
-function parse_subject(match: RegExpExecArray): SubjectData {
+function parse_class(match: RegExpExecArray): ClassData {
     return {
         code: match[1],
-        subj_no: match[2],
+        subject: match[2],
         title: match[3],
-        subj_sched: parse_schedule(match[4]),
+        schedule: parse_schedule(match[4]),
         teacher: parse_teacher(match[5] || '', match[6]),
     }
 }
 
 export type SisData = {
-    subjects: SubjectData[]
+    classes: ClassData[]
 }
 
 export function parse_sis(text: string): SisData {
     text = text.replace(/\r/g, '')
-    return { subjects: [...text.matchAll(subject_regex)].map(parse_subject) }
+    const classes = [...text.matchAll(class_regex)].map(parse_class)
+    return { classes }
 }

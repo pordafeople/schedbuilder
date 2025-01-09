@@ -6,7 +6,6 @@ type InputBoxProps = {
 }
 
 function InputBox({ text, setText }: InputBoxProps) {
-  useState()
   return (
     <textarea
       name="input_box"

@@ -2,8 +2,8 @@
 // but we're here and it kinda works so
 
 export type Time = {
-    hour: number,
-    minute: number,
+    hour: number
+    minute: number
 }
 
 function parse_time(text: string): Time {
@@ -11,14 +11,14 @@ function parse_time(text: string): Time {
     const match = text.match(re)!
     const am_pm_offset = match[3] === 'A' ? 0 : 12
     return {
-        hour: parseInt(match[1]) % 12 + am_pm_offset,
+        hour: (parseInt(match[1]) % 12) + am_pm_offset,
         minute: parseInt(match[2]),
     }
 }
 
 export function time_str(time: Time): string {
     const am_pm = time.hour < 12 ? 'A' : 'P'
-    const hour = ((time.hour + 11) % 12 + 1).toString()
+    const hour = (((time.hour + 11) % 12) + 1).toString()
     const minute = time.minute.toString().padStart(2, '0')
     return `${hour}:${minute}${am_pm}`
 }
@@ -36,13 +36,12 @@ export function minutes_time(minutes: TimeMinutes): Time {
     }
 }
 
-
 export type Weekday = string
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa']
 
 function parse_weekdays(text: string): Weekday[] {
-    const re = /Th|Sa|[SMTWF]/g;
-    return [...text.matchAll(re)].map(match => match[0]);
+    const re = /Th|Sa|[SMTWF]/g
+    return [...text.matchAll(re)].map((match) => match[0])
 }
 
 export type WeekdayIndex = number
@@ -55,12 +54,11 @@ export function index_weekday(index: WeekdayIndex): Weekday {
     return WEEKDAYS[index]
 }
 
-
 export type ClassPeriod = {
-    start: Time,
-    end: Time,
-    room: string,
-    weekdays: Weekday[],
+    start: Time
+    end: Time
+    room: string
+    weekdays: Weekday[]
 }
 
 const period_regex = /(\d+:\d+[AP])-(\d+:\d+[AP]) ([A-Z](?:[a-z]+ )?\w+) (\w+)/g
@@ -73,27 +71,23 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
     }
 }
 
-
 export type SubjectSchedule = ClassPeriod[]
 
 function parse_schedule(text: string): SubjectSchedule {
     return [...text.matchAll(period_regex)].map(parse_period)
-
 }
-
 
 export type Emails = string[]
 
 function parse_emails(emails: string): Emails {
     const re = /[\w]+@[\w.]+/g
-    return [...emails.matchAll(re)].map(match => match[0])
+    return [...emails.matchAll(re)].map((match) => match[0])
 }
 
-
 export type Teacher = {
-    family_name: string,
-    given_name: string,
-    emails: Emails,
+    family_name: string
+    given_name: string
+    emails: Emails
 }
 
 function parse_teacher(name: string, emails: string): Teacher {
@@ -106,7 +100,6 @@ function parse_teacher(name: string, emails: string): Teacher {
     }
 }
 
-
 // CODE	SUBJ. NO	DESCRIPTIVE TITLE	SCHEDULE	TEACHER	UNIT	Required
 /** Data for a single class of a course. */
 export type SubjectData = {
@@ -118,7 +111,8 @@ export type SubjectData = {
     teacher: Teacher
 }
 
-const subject_regex = /^(\d+-\d+)\s?(\w+ \d+)\s?([\w, \-\d]+)\s?\* ((?:.+? \*)+)\s?([\w, ]+)?\s?([a-z@\.;]+)?\s?(\d)\/(\d)\s?$/gm
+const subject_regex =
+    /^(\d+-\d+)\s?(\w+ \d+)\s?([\w, \-\d]+)\s?\* ((?:.+? \*)+)\s?([\w, ]+)?\s?([a-z@\.;]+)?\s?(\d)\/(\d)\s?$/gm
 function parse_subject(match: RegExpExecArray): SubjectData {
     return {
         code: match[1],
@@ -129,11 +123,11 @@ function parse_subject(match: RegExpExecArray): SubjectData {
     }
 }
 
-
 export type SisData = {
     subjects: SubjectData[]
 }
 
 export function parse_sis(text: string): SisData {
+    text = text.replace(/\r/g, '')
     return { subjects: [...text.matchAll(subject_regex)].map(parse_subject) }
 }

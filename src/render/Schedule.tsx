@@ -1,5 +1,4 @@
-import React from 'react'
-import { ScheduleTable, TimeSlot } from '../process/arrange'
+import { ScheduleTable } from '../process/arrange'
 import { time_str } from '../process/parse'
 
 function Schedule({ table }: ScheduleTable) {

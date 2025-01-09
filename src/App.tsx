@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import InputBox from './InputBox'
 import Schedule from './render/Schedule'
-import { sample_table } from './render/sampleinput'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
 
@@ -19,7 +18,7 @@ function App() {
   }, [])
 
   const parsed = parse_sis(text)
-  const { classes, schedule } = arrange(parsed)
+  const { classes: _, schedule } = arrange(parsed)
 
   return (
     <>

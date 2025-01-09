@@ -76,7 +76,7 @@ export type ClassDisplayData = {
 
 export type Classes = ClassDisplayData[]
 
-function get_classes(data: SisData): Classes {
+function get_classes(_data: SisData): Classes {
     return []
 }
 

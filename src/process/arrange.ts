@@ -2,6 +2,11 @@
 
 import { SisData, SubjectData, Time, time_minutes, time_str, Weekday, weekday_value } from './parse'
 
+const EMPTY_SLOT: TimeSlot = {
+    data: { type: 'empty' },
+    rowspan: 1,
+    colspan: 1,
+}
 export type TimeSlot = {
     data:
         | { type: 'subject', subject: SubjectData }
@@ -60,7 +65,7 @@ export function arrange(data: SisData): ScheduleTable {
         table.push({
             time: prev_time,
             size: time_minutes(time) - time_minutes(prev_time),
-            columns: new Array(6).fill(null)
+            columns: new Array(6).fill(EMPTY_SLOT)
         })
         prev_time = time
     }

@@ -3,7 +3,7 @@ import { ScheduleTable, TimeSlot } from '../process/arrange'
 import { time_str } from '../process/parse'
 
 function Schedule({ table }: ScheduleTable) {
-  // console.log(table)
+  console.log(table)
   let out = ''
   for (const row of table) {
     out += time_str(row.time) + ':\t'

@@ -6,6 +6,8 @@ import Subject from './Subject'
 import InputBox from './InputBox'
 import Schedule from './render/Schedule'
 import { sample_table } from './render/sampleinput'
+import { parse_sis } from './process/parse'
+import { arrange } from './process/arrange'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,14 +19,16 @@ function App() {
       .catch((_e) => setText('<Failed to load sample text.>'))
   }, [])
 
-  // TODO: pass the arranged value to Schedule
+  const parsed = parse_sis(text)
+  const arranged = arrange(parsed)
+
   return (
     <>
       <div>
         <Subject />
         <InputBox text={text} setText={setText} />
         <br />
-        <Schedule {...sample_table} />
+        <Schedule {...arranged} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

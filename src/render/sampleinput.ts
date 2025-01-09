@@ -41,12 +41,14 @@ export const sample_table: ScheduleTable = {
                 { subject: philo, rowspan: 1 },
                 { subject: itc, rowspan: 2 },
                 null,
+                null,
             ]
         },
         {
             time: { hour: 9, minute: 10 },
             size: 60,
             columns: [
+                null,
                 null,
                 null,
                 null,

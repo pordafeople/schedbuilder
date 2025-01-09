@@ -18,6 +18,7 @@ function App() {
   return (
     <>
       <div>
+        <h1>SchedBuilder</h1>
         <InputBox text={text} setText={setText} />
         <br />
         <Schedule {...schedule} />

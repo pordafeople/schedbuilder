@@ -15,8 +15,8 @@ function InputBox() {
         // console.log('changed: ', value)
         const parsed = parse_sis(value)
         console.log(parsed)
-        const arranged = arrange(parsed)
-        console.log(arranged)
+        // const arranged = arrange(parsed)
+        // console.log(arranged)
         setText(value)
       }}
     >

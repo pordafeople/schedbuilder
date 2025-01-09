@@ -25,12 +25,12 @@ const itc: SubjectData = {
     },
 }
 
-const sample_subjects: SubjectData[] = [
+export const sample_subjects: SubjectData[] = [
     philo,
     itc,
 ]
 
-const sample_table: ScheduleTable = {
+export const sample_table: ScheduleTable = {
     table: [
         {
             time: { hour: 7, minute: 40 },

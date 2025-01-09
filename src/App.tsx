@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Subject from './Subject'
 import InputBox from './InputBox'
+import Schedules from './render/Schedules'
+import { sample_table } from './render/sampleinput'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +15,7 @@ function App() {
       <div>
         <Subject />
         <InputBox />
+        <Schedules table={sample_table}/>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

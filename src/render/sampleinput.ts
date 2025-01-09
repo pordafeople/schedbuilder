@@ -25,7 +25,12 @@ const itc: SubjectData = {
     },
 }
 
-const test_input: ScheduleTable = {
+const sample_subjects: SubjectData[] = [
+    philo,
+    itc,
+]
+
+const sample_table: ScheduleTable = {
     table: [
         {
             time: { hour: 7, minute: 40 },

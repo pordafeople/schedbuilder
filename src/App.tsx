@@ -17,11 +17,13 @@ function App() {
       .catch((_e) => setText('<Failed to load sample text.>'))
   }, [])
 
+  // TODO: pass the arranged value to Schedule
   return (
     <>
       <div>
         <Subject />
         <InputBox text={text} setText={setText} />
+        <br />
         <Schedule {...sample_table} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

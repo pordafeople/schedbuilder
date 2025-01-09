@@ -62,6 +62,7 @@ export function arrange(data: SisData): ScheduleTable {
             size: time_minutes(time) - time_minutes(prev_time),
             columns: new Array(6).fill(null)
         })
+        prev_time = time
     }
     
     for (const subject of data.subjects) {

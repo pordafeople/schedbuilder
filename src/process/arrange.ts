@@ -2,21 +2,19 @@
 
 import { SisData, SubjectData, Time, time_minutes, time_str, Weekday, weekday_value } from './parse'
 
-export type SubjectSlot = {
-    subject: SubjectData,
-    rowspan: number,
-}
-
-export type TimeSlot = SubjectSlot | null
-
-export type Bar = {
-    text: string,
+export type TimeSlot = {
+    data:
+        | { type: 'subject', subject: SubjectData }
+        | { type: 'bar', text: string }
+        | { type: 'empty' }
+    rowspan: number
+    colspan: number
 }
 
 export type ScheduleRow = {
-    time: Time,
-    size: number,
-    columns: TimeSlot[] | Bar,
+    time: Time
+    size: number
+    columns: TimeSlot[]
 }
 
 export type ScheduleTable = {

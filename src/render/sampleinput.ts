@@ -36,24 +36,25 @@ export const sample_table: ScheduleTable = {
             time: { hour: 7, minute: 40 },
             size: 60,
             columns: [
-                { subject: philo, rowspan: 1 },
-                { subject: itc, rowspan: 2 },
-                { subject: philo, rowspan: 1 },
-                { subject: itc, rowspan: 2 },
-                null,
-                null,
+                { data: { type: 'subject', subject: philo}, rowspan: 1, colspan: 1 },
+                { data: { type: 'subject', subject: itc}, rowspan: 2, colspan: 1 },
+                { data: { type: 'subject', subject: philo}, rowspan: 1, colspan: 1 },
+                { data: { type: 'subject', subject: itc}, rowspan: 2, colspan: 1 },
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
+
             ]
         },
         {
             time: { hour: 9, minute: 10 },
             size: 60,
             columns: [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
+                // <this> slot occupied by tile with rowspan
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
+                // <this> slot occupied by tile with rowspan
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
+                { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
             ]
         },
     ],

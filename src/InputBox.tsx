@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { parse_sis } from './process/parse'
+import { arrange } from './process/arrange'
 
 function InputBox() {
   const [text, setText] = useState('<insert name>')
@@ -12,7 +13,10 @@ function InputBox() {
       onChange={(e) => {
         const value = e.target.value
         // console.log('changed: ', value)
-        console.log(parse_sis(value))
+        const parsed = parse_sis(value)
+        console.log(parsed)
+        const arranged = arrange(parsed)
+        console.log(arranged)
         setText(value)
       }}
     >

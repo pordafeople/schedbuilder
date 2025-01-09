@@ -16,6 +16,13 @@ function parse_time(text: string): Time {
     }
 }
 
+export function time_str(time: Time): string {
+    const am_pm = time.hour < 12 ? 'A' : 'P'
+    const hour = (time.hour % 12).toString()
+    const minute = time.minute.toString().padStart(2, '0')
+    return `${hour}:${minute}${am_pm}`
+}
+
 export function time_minutes(time: Time): number {
     return time.hour * 60 + time.minute
 }

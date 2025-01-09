@@ -3,7 +3,6 @@ import { ScheduleTable, TimeSlot } from '../process/arrange'
 
 function Schedule({ table }: ScheduleTable) {
   console.log(table)
-  const tile = table[0].columns[2].data
   for (const row of table) {
     for (const tile of row.columns) {
       console.log(tile.colspan, tile.rowspan)

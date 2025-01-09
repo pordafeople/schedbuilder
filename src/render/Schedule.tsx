@@ -15,9 +15,9 @@ function Schedule({ table }: ScheduleTable) {
       }
       const data = tile.data
       switch (data.type) {
-        case 'subject':
-          out += '"' + data.subject.code + '"\t'
-          // console.log(data.subject)
+        case 'class':
+          out += '"' + data.class_data.code + '"\t'
+          // console.log(data.class_data)
           break
         case 'bar':
           out += '"' + data.text + '"\t'

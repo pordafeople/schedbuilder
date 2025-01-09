@@ -3,7 +3,7 @@
 import {
     minutes_time,
     SisData,
-    SubjectData,
+    ClassData,
     Time,
     time_minutes,
     time_str,
@@ -19,7 +19,7 @@ const EMPTY_SLOT: TimeSlot = {
 }
 export type TimeSlot = null | {
     data:
-        | { type: 'subject'; subject: SubjectData }
+        | { type: 'class'; class_data: ClassData }
         | { type: 'bar'; text: string }
         | { type: 'empty' }
     rowspan: number
@@ -49,8 +49,8 @@ function key_sort_dedup<T>(array: T[], key: (item: T) => number): number[] {
 
 function get_times(data: SisData): TimeMinutes[] {
     const times: Time[] = []
-    for (const subj of data.subjects) {
-        for (const slot of subj.subj_sched) {
+    for (const class_data of data.classes) {
+        for (const slot of class_data.schedule) {
             times.push(slot.start)
             times.push(slot.end)
         }
@@ -61,7 +61,7 @@ function get_times(data: SisData): TimeMinutes[] {
 // TODO: remove unnecessary weekdays
 // TODO: delete table tiles that will be overwritten by rowspan and colspan
 
-function arrange_subjects(data: SisData): SubjectData[] {
+function get_classes(data: SisData): ClassData[] {
     return []
 }
 
@@ -90,8 +90,8 @@ function arrange_schedule(data: SisData): ScheduleTable {
     }
 
     // fill in the table data
-    for (const subject of data.subjects) {
-        for (const subj_slot of subject.subj_sched) {
+    for (const class_data of data.classes) {
+        for (const subj_slot of class_data.schedule) {
             const start_row = minutes.indexOf(time_minutes(subj_slot.start))
             const end_row = minutes.indexOf(time_minutes(subj_slot.end))
             const rowspan = end_row - start_row
@@ -101,8 +101,8 @@ function arrange_schedule(data: SisData): ScheduleTable {
                 // add the main subject tile
                 table[start_row].columns[col] = {
                     data: {
-                        type: 'subject',
-                        subject,
+                        type: 'class',
+                        class_data,
                     },
                     colspan: 1,
                     rowspan,
@@ -125,11 +125,11 @@ function arrange_schedule(data: SisData): ScheduleTable {
  * @returns the subjects and the schedule
  */
 export function arrange(data: SisData): {
-    subjects: SubjectData[]
+    classes: ClassData[]
     schedule: ScheduleTable
 } {
     return {
-        subjects: arrange_subjects(data),
+        classes: get_classes(data),
         schedule: arrange_schedule(data),
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
-function Subjects() {
+function Classes() {
   return <div></div>
 }
 
-export default Subjects
+export default Classes

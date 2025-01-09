@@ -1,11 +1,11 @@
 import { ScheduleTable } from '../process/arrange'
-import { SubjectData } from '../process/parse'
+import { ClassData } from '../process/parse'
 
-const philo: SubjectData = {
+const philo: ClassData = {
     code: '16-999A',
-    subj_no: 'Philo 1000',
+    subject: 'Philo 1000',
     title: 'PHILOSOPHY',
-    subj_sched: [], // ignore this when displaying, it's only necessary for computing
+    schedule: [], // ignore this when displaying, it's only necessary for computing
     teacher: {
         family_name: 'FAMILYNAME',
         given_name: 'GIVEN NAME',
@@ -13,11 +13,11 @@ const philo: SubjectData = {
     },
 }
 
-const itc: SubjectData = {
+const itc: ClassData = {
     code: '4-111',
-    subj_no: 'CS 1111',
+    subject: 'CS 1111',
     title: 'INTRODUCTION TO COMPUTING',
-    subj_sched: [], // ignore this when displaying, it's only necessary for computing
+    schedule: [], // ignore this when displaying, it's only necessary for computing
     teacher: {
         family_name: 'GAMING',
         given_name: 'CHRIS ALVIORITHM',
@@ -25,7 +25,7 @@ const itc: SubjectData = {
     },
 }
 
-export const sample_subjects: SubjectData[] = [philo, itc]
+export const sample_subjects: ClassData[] = [philo, itc]
 
 export const sample_table: ScheduleTable = {
     table: [
@@ -34,22 +34,22 @@ export const sample_table: ScheduleTable = {
             size: 60,
             columns: [
                 {
-                    data: { type: 'subject', subject: philo },
+                    data: { type: 'class', class_data: philo },
                     rowspan: 1,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'subject', subject: itc },
+                    data: { type: 'class', class_data: itc },
                     rowspan: 2,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'subject', subject: philo },
+                    data: { type: 'class', class_data: philo },
                     rowspan: 1,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'subject', subject: itc },
+                    data: { type: 'class', class_data: itc },
                     rowspan: 2,
                     colspan: 1,
                 },

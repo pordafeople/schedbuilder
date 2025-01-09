@@ -1,4 +1,4 @@
-import { ScheduleTable } from '../process/arrange'
+import { ScheduleTable, WEEKDAY_CONFIG_DEFAULT } from '../process/arrange'
 import { ClassData } from '../process/parse'
 
 const philo: ClassData = {
@@ -28,28 +28,29 @@ const itc: ClassData = {
 export const sample_subjects: ClassData[] = [philo, itc]
 
 export const sample_table: ScheduleTable = {
+    weekday_config: WEEKDAY_CONFIG_DEFAULT,
     table: [
         {
             time: { hour: 7, minute: 40 },
             size: 60,
             columns: [
                 {
-                    data: { type: 'class', class_data: philo },
+                    data: { type: 'class', class_code: philo.code },
                     rowspan: 1,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'class', class_data: itc },
+                    data: { type: 'class', class_code: itc.code },
                     rowspan: 2,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'class', class_data: philo },
+                    data: { type: 'class', class_code: philo.code },
                     rowspan: 1,
                     colspan: 1,
                 },
                 {
-                    data: { type: 'class', class_data: itc },
+                    data: { type: 'class', class_code: itc.code },
                     rowspan: 2,
                     colspan: 1,
                 },

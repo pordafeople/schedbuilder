@@ -1,5 +1,5 @@
-import { ScheduleTable } from "../process/arrange"
-import { SubjectData } from "../process/parse"
+import { ScheduleTable } from '../process/arrange'
+import { SubjectData } from '../process/parse'
 
 const philo: SubjectData = {
     code: '16-999A',
@@ -25,10 +25,7 @@ const itc: SubjectData = {
     },
 }
 
-export const sample_subjects: SubjectData[] = [
-    philo,
-    itc,
-]
+export const sample_subjects: SubjectData[] = [philo, itc]
 
 export const sample_table: ScheduleTable = {
     table: [
@@ -36,14 +33,29 @@ export const sample_table: ScheduleTable = {
             time: { hour: 7, minute: 40 },
             size: 60,
             columns: [
-                { data: { type: 'subject', subject: philo}, rowspan: 1, colspan: 1 },
-                { data: { type: 'subject', subject: itc}, rowspan: 2, colspan: 1 },
-                { data: { type: 'subject', subject: philo}, rowspan: 1, colspan: 1 },
-                { data: { type: 'subject', subject: itc}, rowspan: 2, colspan: 1 },
+                {
+                    data: { type: 'subject', subject: philo },
+                    rowspan: 1,
+                    colspan: 1,
+                },
+                {
+                    data: { type: 'subject', subject: itc },
+                    rowspan: 2,
+                    colspan: 1,
+                },
+                {
+                    data: { type: 'subject', subject: philo },
+                    rowspan: 1,
+                    colspan: 1,
+                },
+                {
+                    data: { type: 'subject', subject: itc },
+                    rowspan: 2,
+                    colspan: 1,
+                },
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
-
-            ]
+            ],
         },
         {
             time: { hour: 9, minute: 10 },
@@ -55,7 +67,7 @@ export const sample_table: ScheduleTable = {
                 null,
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
                 { data: { type: 'empty' }, rowspan: 1, colspan: 1 },
-            ]
+            ],
         },
     ],
 }

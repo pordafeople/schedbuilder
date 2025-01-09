@@ -1,6 +1,16 @@
 // apologies in advance for my C style
 
-import { minutes_time, SisData, SubjectData, Time, time_minutes, time_str, TimeMinutes, Weekday, weekday_index } from './parse'
+import {
+    minutes_time,
+    SisData,
+    SubjectData,
+    Time,
+    time_minutes,
+    time_str,
+    TimeMinutes,
+    Weekday,
+    weekday_index,
+} from './parse'
 
 const EMPTY_SLOT: TimeSlot = {
     data: { type: 'empty' },
@@ -9,8 +19,8 @@ const EMPTY_SLOT: TimeSlot = {
 }
 export type TimeSlot = null | {
     data:
-        | { type: 'subject', subject: SubjectData }
-        | { type: 'bar', text: string }
+        | { type: 'subject'; subject: SubjectData }
+        | { type: 'bar'; text: string }
         | { type: 'empty' }
     rowspan: number
     colspan: number
@@ -31,7 +41,10 @@ function key_sort_dedup<T>(array: T[], key: (item: T) => number): number[] {
     const dedup_filter = (item: any, pos: number, arr: any[]) => {
         return pos === 0 || item !== arr[pos - 1]
     }
-    return array.map(key).sort((a, b) => a - b).filter(dedup_filter)
+    return array
+        .map(key)
+        .sort((a, b) => a - b)
+        .filter(dedup_filter)
 }
 
 function get_times(data: SisData): TimeMinutes[] {
@@ -54,7 +67,7 @@ function arrange_subjects(data: SisData): SubjectData[] {
 
 function arrange_schedule(data: SisData): ScheduleTable {
     const table: ScheduleRow[] = []
-    
+
     // get all the unique timestamps in the data and sort them
     const minutes = get_times(data)
 
@@ -71,7 +84,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
         table.push({
             time: minutes_time(prev_minutes),
             size: time - prev_minutes,
-            columns: new Array(7).fill(EMPTY_SLOT)
+            columns: new Array(7).fill(EMPTY_SLOT),
         })
         prev_minutes = time
     }
@@ -111,8 +124,12 @@ function arrange_schedule(data: SisData): ScheduleTable {
  * @param data the SIS data to arrange
  * @returns the subjects and the schedule
  */
-export function arrange(data: SisData): { subjects: SubjectData[], schedule: ScheduleTable } {
+export function arrange(data: SisData): {
+    subjects: SubjectData[]
+    schedule: ScheduleTable
+} {
     return {
         subjects: arrange_subjects(data),
-        schedule: arrange_schedule(data), }
+        schedule: arrange_schedule(data),
+    }
 }

@@ -1,6 +1,6 @@
 // apologies in advance for my C style
 
-import { SisData, SubjectData, Time, time_minutes, time_str, Weekday, weekday_index } from './parse'
+import { minutes_time, SisData, SubjectData, Time, time_minutes, time_str, TimeMinutes, Weekday, weekday_index } from './parse'
 
 const EMPTY_SLOT: TimeSlot = {
     data: { type: 'empty' },
@@ -27,26 +27,14 @@ export type ScheduleTable = {
     table: ScheduleRow[]
 }
 
-function sort_by_key<T>(array: T[], key: (item: T) => number): T[] {
-    return array.sort((a, b) => key(a) - key(b))
-}
-const dedup_filter = (item: any, pos: number, arr: any[]) => {
-    return pos == 0 || item != arr[pos - 1]
-}
-
-function get_weekdays(data: SisData): Weekday[] {
-    const out: Weekday[] = []
-    for (const subj of data.subjects) {
-        for (const slot of subj.subj_sched) {
-            for (const weekday of slot.weekdays) {
-                out.push(weekday)
-            }
-        }
+function key_sort_dedup<T>(array: T[], key: (item: T) => number): number[] {
+    const dedup_filter = (item: any, pos: number, arr: any[]) => {
+        return pos === 0 || item !== arr[pos - 1]
     }
-    return sort_by_key(out, weekday_index).filter(dedup_filter)
+    return array.map(key).sort((a, b) => a - b).filter(dedup_filter)
 }
 
-function get_times(data: SisData): Time[] {
+function get_times(data: SisData): TimeMinutes[] {
     const times: Time[] = []
     for (const subj of data.subjects) {
         for (const slot of subj.subj_sched) {
@@ -54,27 +42,38 @@ function get_times(data: SisData): Time[] {
             times.push(slot.end)
         }
     }
-    return sort_by_key(times, time_minutes).filter(dedup_filter)
+    return key_sort_dedup(times, time_minutes)
 }
 
+// TODO: remove unnecessary weekdays
+// TODO: delete table tiles that will be overwritten by rowspan and colspan
+
 export function arrange(data: SisData): { subjects: SubjectData[], schedule: ScheduleTable } {
+    const subjects: SubjectData[] = []
     const table: ScheduleRow[] = []
-    const times = get_times(data)
-    let prev_time = times[0]
-    for (const time of times.slice(1)) {
-        table.push({
-            time: prev_time,
-            size: time_minutes(time) - time_minutes(prev_time),
-            columns: new Array(6).fill(EMPTY_SLOT)
-        })
-        prev_time = time
+    const minutes = get_times(data)
+    if (minutes.length === 0) {
+        return { subjects, schedule: { table } }
     }
+    console.log(minutes)
+    let prev_minutes = minutes[0]
+    minutes.push(minutes[minutes.length - 1] + 30)
+    for (const time of minutes.slice(1)) {
+        table.push({
+            time: minutes_time(prev_minutes),
+            size: time - prev_minutes,
+            columns: new Array(7).fill(EMPTY_SLOT)
+        })
+        prev_minutes = time
+    }
+    // console.log(table)
     
     for (const subject of data.subjects) {
         for (const subj_slot of subject.subj_sched) {
-            const start_row = times.indexOf(subj_slot.start)
-            const end_row = times.indexOf(subj_slot.end)
+            const start_row = minutes.indexOf(time_minutes(subj_slot.start))
+            const end_row = minutes.indexOf(time_minutes(subj_slot.end))
             const rowspan = end_row - start_row
+            console.log(subj_slot.start, start_row, subj_slot.end, end_row)
             for (const weekday of subj_slot.weekdays) {
                 table[start_row].columns[weekday_index(weekday)] = {
                     data: {
@@ -87,5 +86,5 @@ export function arrange(data: SisData): { subjects: SubjectData[], schedule: Sch
             }
         }
     }
-    return { subjects: [], schedule: { table } }
+    return { subjects, schedule: { table } }
 }

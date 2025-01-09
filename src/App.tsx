@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -6,16 +6,11 @@ import InputBox from './InputBox'
 import Schedule from './render/Schedule'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
+import { sample_text } from './render/sampleinput'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [text, setText] = useState('<Loading sample text...>')
-  useEffect(() => {
-    fetch('../src/render/input.txt')
-      .then((res) => res.text())
-      .then((value) => setText(value))
-      .catch((_e) => setText('<Failed to load sample text.>'))
-  }, [])
+  const [text, setText] = useState(sample_text)
 
   const parsed = parse_sis(text)
   const { classes: _, schedule } = arrange(parsed)

@@ -8,22 +8,29 @@ import {
     weekday_index,
     WeekdayIndex,
     ClassCode,
+    Weekday,
+    WEEKDAYS,
 } from './parse'
 
 export type Color = string
 
-const EMPTY_SLOT: TimeSlot = {
-    data: { type: 'empty' },
-    rowspan: 1,
-    colspan: 1,
-}
 export type TimeSlot = null | {
+    weekday: Weekday
+    rowspan: number
+    colspan: number
     data:
         | { type: 'class'; class_code: ClassCode }
         | { type: 'bar'; text: string }
         | { type: 'empty' }
-    rowspan: number
-    colspan: number
+}
+
+function empty_slot(weekday: Weekday): TimeSlot {
+    return {
+        weekday,
+        rowspan: 1,
+        colspan: 1,
+        data: { type: 'empty' },
+    }
 }
 
 export type ScheduleRow = {
@@ -120,7 +127,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
         table.push({
             time: minutes_time(prev_minutes),
             size: time - prev_minutes,
-            columns: new Array(7).fill(EMPTY_SLOT),
+            columns: WEEKDAYS.map(empty_slot),
         })
         prev_minutes = time
     }
@@ -136,12 +143,13 @@ function arrange_schedule(data: SisData): ScheduleTable {
                 const col = weekday_index(weekday)
                 // add the main subject tile
                 table[start_row].columns[col] = {
+                    weekday,
+                    colspan: 1,
+                    rowspan,
                     data: {
                         type: 'class',
                         class_code: class_data.code,
                     },
-                    colspan: 1,
-                    rowspan,
                 }
                 // delete the tiles that the subject overlaps
                 for (let row = start_row + 1; row < end_row; row++) {

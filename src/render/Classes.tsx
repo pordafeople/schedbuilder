@@ -1,9 +1,13 @@
 import { ClassDisplayData, ClassList } from '../process/arrange'
 import './Classes.css'
 
-function ClassDisplay({ class_data, color }: ClassDisplayData, index: number) {
+function ClassDisplay({ class_data, color }: ClassDisplayData) {
   return (
-    <tr key={index} className="class" style={{ backgroundColor: color }}>
+    <tr
+      key={class_data.code}
+      className="class"
+      style={{ backgroundColor: color }}
+    >
       <td>{class_data.code}</td>
     </tr>
   )

@@ -37,7 +37,7 @@ export function minutes_time(minutes: TimeMinutes): Time {
 }
 
 export type Weekday = string
-const WEEKDAYS = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+export const WEEKDAYS = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa']
 
 function parse_weekdays(text: string): Weekday[] {
     const re = /Th|Sa|[SMTWF]/g

@@ -5,6 +5,7 @@ import './App.css'
 import InputBox from './input/InputBox'
 import Schedule from './render/Schedule'
 import Classes from './render/Classes'
+import ImageRenderer from './output/ImageRenderer'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
 import { sample_text } from './input/sampleinput'
@@ -23,8 +24,14 @@ function App() {
         <h1>SchedBuilder</h1>
         <InputBox text={text} setText={setText} />
         <br />
-        <Schedule {...schedule} />
-        <Classes classes={classes} />
+        <ImageRenderer for="render-source" />
+        <br />
+        <div id="render-source" className="render-container">
+          <Schedule {...schedule} />
+          <Classes classes={classes} />
+        </div>
+      </div>
+      <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

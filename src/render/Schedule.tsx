@@ -1,9 +1,19 @@
 import { ScheduleTable } from '../process/arrange'
 import { time_str } from '../process/parse'
 
-function Schedule({ table }: ScheduleTable) {
+function Schedule({ weekday_config, table }: ScheduleTable) {
+  console.log(weekday_config)
   console.log(table)
   let out = ''
+
+  // show weekday colors
+  out += '\t'.repeat(1 + weekday_config.start)
+  for (const color of weekday_config.colors) {
+    out += color + '\t'
+  }
+  out += '\n'
+
+  // show table
   for (const row of table) {
     out += time_str(row.time) + ':\t'
     for (const tile of row.columns) {

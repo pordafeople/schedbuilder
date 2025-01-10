@@ -2,6 +2,12 @@ textarea {
   tab-size: 16;
 }
 
+.render-container {
+  border: 3px solid white;
+  border-radius: 6px;
+  padding: 6px;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import InputBox from './InputBox'
 import Schedule from './render/Schedule'
+import Classes from './render/Classes'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
 import { sample_text } from './render/sampleinput'
@@ -13,7 +14,8 @@ function App() {
   const [text, setText] = useState(sample_text)
 
   const parsed = parse_sis(text)
-  const { classes: _, schedule } = arrange(parsed)
+  console.log(parsed)
+  const { classes, schedule } = arrange(parsed)
 
   return (
     <>
@@ -22,6 +24,7 @@ function App() {
         <InputBox text={text} setText={setText} />
         <br />
         <Schedule {...schedule} />
+        <Classes classes={classes} />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

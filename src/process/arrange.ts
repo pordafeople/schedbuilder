@@ -74,10 +74,14 @@ export type ClassDisplayData = {
     color: Color
 }
 
-export type Classes = ClassDisplayData[]
+export type ClassList = ClassDisplayData[]
 
-function get_classes(_data: SisData): Classes {
-    return []
+function get_classes(data: SisData): ClassList {
+    // TODO: auto-gen palette
+    return data.classes.map((class_data) => ({
+        class_data,
+        color: '#f84',
+    }))
 }
 
 // TODO: remove unnecessary weekdays
@@ -143,7 +147,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
 }
 
 export type SisDisplayData = {
-    classes: Classes
+    classes: ClassList
     schedule: ScheduleTable
 }
 

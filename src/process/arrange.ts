@@ -77,10 +77,22 @@ export type ClassDisplayData = {
 export type ClassList = ClassDisplayData[]
 
 function get_classes(data: SisData): ClassList {
+    const PALETTE_DEFAULT = [
+        '#f88',
+        '#ea8',
+        '#dd8',
+        '#8e8', // one green instead of  '#ae8', '#8f8', '#8ea',
+        '#8dd',
+        '#8ae',
+        '#88f',
+        '#a8e',
+        '#d8d',
+        '#e8a',
+    ]
     // TODO: auto-gen palette
-    return data.classes.map((class_data) => ({
+    return data.classes.map((class_data, index) => ({
         class_data,
-        color: '#f84',
+        color: PALETTE_DEFAULT[index % PALETTE_DEFAULT.length],
     }))
 }
 

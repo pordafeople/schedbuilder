@@ -2,12 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import InputBox from './InputBox'
+import InputBox from './input/InputBox'
 import Schedule from './render/Schedule'
 import Classes from './render/Classes'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
-import { sample_text } from './render/sampleinput'
+import { sample_text } from './input/sampleinput'
 
 function App() {
   const [count, setCount] = useState(0)

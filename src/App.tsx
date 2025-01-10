@@ -22,13 +22,18 @@ function App() {
     <>
       <div>
         <h1>SchedBuilder</h1>
-        <InputBox text={text} setText={setText} />
-        <br />
-        <ImageRenderer for="render-source" />
-        <br />
+        <div>
+          <h2>Input</h2>
+          <InputBox text={text} setText={setText} />
+        </div>
         <div id="render-source" className="render-container">
+          <h2>Schedule</h2>
           <Schedule {...schedule} />
           <Classes classes={classes} />
+        </div>
+        <div>
+          <h2>Image Renderer</h2>
+          <ImageRenderer for="render-source" />
         </div>
       </div>
       <div>

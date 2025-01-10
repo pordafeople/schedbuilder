@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 // Partially from ChatGPT
 function ImageRenderer({ for: target }: { for: string }) {

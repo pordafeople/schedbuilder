@@ -38,7 +38,7 @@ function Schedule({ weekday_config, table }: ScheduleTable) {
     out += '\n'
   }
 
-  return <textarea cols={160} rows={20} value={out} readOnly />
+  return <textarea cols={100} rows={20} value={out} readOnly />
 }
 
 export default Schedule

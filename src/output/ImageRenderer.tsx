@@ -21,10 +21,12 @@ function ImageRenderer({ for: target }: { for: string }) {
       <button onClick={() => capture_and_show_canvas()}>
         Render to Image!
       </button>
+      <br />
       {canvasUrl && (
         <div>
           <h3 style={{ display: 'inline' }}>Generated Image: </h3>
           <button>Download</button>
+          <br />
           <img src={canvasUrl} alt="Captured Canvas" />
         </div>
       )}

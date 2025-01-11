@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas'
 import { useState } from 'react'
+import './ImageRenderer.css'
 
 // Partially from ChatGPT
 function ImageRenderer({ for: target }: { for: string }) {
@@ -45,7 +46,7 @@ function ImageRenderer({ for: target }: { for: string }) {
             <h3 style={{ display: 'inline' }}>Generated Image: </h3>
             <button onClick={download_image}>Download Image!</button>
             <br />
-            <img src={canvasUrl} alt="Captured Canvas" />
+            <img className='capture-Img' src={canvasUrl} alt="Captured Canvas" />
           </div>
         </>
       )}

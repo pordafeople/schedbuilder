@@ -36,7 +36,7 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
           className="class-code"
           style={{ backgroundColor: colors?.classes[data.class_code].normal }}
         >
-          {data.class_code}
+          <p>{data.class_code}</p>
         </div>
       ) : data.type === 'bar' ? (
         <div className="bar-text">{data.text}</div>
@@ -69,7 +69,7 @@ function WeekdaysHeader(_config: WeekdayConfig) {
             className="weekday-header"
             style={{ backgroundColor: colors?.weekdays[day].normal }}
           >
-            {day}
+            <p>{day}</p>
           </th>
         ))}
       </tr>

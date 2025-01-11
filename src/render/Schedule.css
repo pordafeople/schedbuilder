@@ -5,6 +5,7 @@
     align-items: center;
     font-family: Arial, sans-serif;
     margin-bottom: 30px;
+    
   }
   
   textarea {
@@ -119,6 +120,18 @@
   
     .class-cell .class-text {
       font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .class-code p, .weekday-header p, .main-container{
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 321px) {
+    .class-code p, .weekday-header p, .main-container{
+      font-size: 8px;
     }
   }
   

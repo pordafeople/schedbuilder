@@ -5,7 +5,8 @@ type InputBoxProps = {
 
 function InputBox({ text, setText }: InputBoxProps) {
   return (
-    <textarea
+    <div className="textArena-container">
+      <textarea
       name="input_box"
       id="input_box"
       cols={160}
@@ -17,6 +18,8 @@ function InputBox({ text, setText }: InputBoxProps) {
         setText(value)
       }}
     />
+    </div>
+    
   )
 }
 

@@ -56,3 +56,39 @@ textarea {
 .read-the-docs {
   color: #888;
 }
+
+@media screen and (max-width: 770px) {
+  .textArena-container {
+    padding: 0 13%;
+  }
+}
+
+@media screen and (max-width: 641px) {
+  .textArena-container {
+    padding: 0 12%;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .textArena-container {
+    padding: 0 12%;
+  }
+}
+
+@media screen and (max-width: 526px) {
+  .textArena-container {
+    padding: 0 10%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .textArena-container {
+    padding: 0 7%;
+  }
+}
+
+@media screen and (max-width: 336px) {
+  .textArena-container {
+    padding: 0 3%;
+  }
+}

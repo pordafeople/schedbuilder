@@ -1,5 +1,5 @@
-import html2canvas from 'html2canvas'
 import { useState } from 'react'
+import html2canvas from 'html2canvas'
 import './ImageRenderer.css'
 
 // Partially from ChatGPT
@@ -10,9 +10,7 @@ function ImageRenderer({ for: target }: { for: string }) {
     // Capture the DOM element using html2canvas
     const element = document.getElementById(target)
     if (element === null) {
-      console.log(
-        `Attempted to render to canvas, but target ID '${target}' did not exist.`,
-      )
+      console.log(`Attempted to render from nonexistent target '${target}'.`)
       return
     }
     html2canvas(element).then((canvas) => {

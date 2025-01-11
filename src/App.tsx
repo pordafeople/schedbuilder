@@ -1,13 +1,13 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import './App.css'
+import { sample_text } from './input/sample_input'
 import InputBox from './input/InputBox'
-import Schedule from './render/Schedule'
-import Classes from './render/Classes'
-import ImageRenderer from './output/ImageRenderer'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
-import { sample_text } from './input/sampleinput'
-import { DisplayData, get_display_data } from './render/DisplayData'
+import Schedule from './render/Schedule'
+import Classes from './render/Classes'
+import { DisplayData, get_display_data } from './render/display_data'
+import ImageRenderer from './output/ImageRenderer'
 
 export const DisplayDataContext = createContext<DisplayData | null>(null)
 

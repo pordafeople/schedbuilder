@@ -1,9 +1,9 @@
 import { ClassDisplayData, ClassList } from '../process/arrange'
 import './Classes.css'
 
-function ClassDisplay({ class_data, color }: ClassDisplayData, index: number) {
+function ClassDisplay({ class_data, color }: ClassDisplayData) {
   return (
-    <tr key={index} className="class" style={{ backgroundColor: color }}>
+    <tr key={class_data.code} className="class" style={{ backgroundColor: color }}>
       <td>{class_data.subject}</td>
       <td>{class_data.title}</td>
       <td>{class_data.teacher.given_name}<br /><label>{class_data.teacher.emails}</label></td>

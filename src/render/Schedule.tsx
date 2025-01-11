@@ -30,14 +30,14 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
       className={`${data.type}-cell`}
       colSpan={tile.colspan || 1}
       rowSpan={tile.rowspan || 1}
+      style={
+        data.type === 'class'
+          ? { backgroundColor: colors?.classes[data.class_code].normal }
+          : {}
+      }
     >
       {data.type === 'class' ? (
-        <div
-          className="class-code"
-          style={{ backgroundColor: colors?.classes[data.class_code].normal }}
-        >
-          {data.class_code}
-        </div>
+        <div className="class-code">{data.class_code}</div>
       ) : data.type === 'bar' ? (
         <div className="bar-text">{data.text}</div>
       ) : (

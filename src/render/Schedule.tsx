@@ -10,8 +10,13 @@ import {
 } from '../process/arrange'
 
 function TimeDisplay(time: Time) {
+  const display_data = useContext(DisplayDataContext)
+  const { class_name, bg_color } =
+    time.hour < 12
+      ? { class_name: 'timeAM', bg_color: display_data.time_colors.am }
+      : { class_name: 'timePM', bg_color: display_data.time_colors.pm }
   return (
-    <td className={`time ${time.hour < 12 ? 'timeAM' : 'timePM'}`}>
+    <td className={`time ${class_name}`} style={{ backgroundColor: bg_color }}>
       {time_str(time)}
     </td>
   )
@@ -21,20 +26,24 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
   if (tile === null) {
     return null
   }
-  const colors = useContext(DisplayDataContext)
-
   const { weekday, rowspan, colspan, data } = tile
+  const colors = useContext(DisplayDataContext)
+  const bg_color =
+    data.type === 'class'
+      ? colors.classes[data.class_code]?.normal || '#4ff'
+      : data.type === 'bar'
+      ? colors.bar_color
+      : data.type === 'empty'
+      ? colors.weekdays[weekday].light
+      : '#0ff' // this should never happen
+
   return (
     <td
       key={weekday}
       className={`${data.type}-cell`}
       colSpan={colspan || 1}
       rowSpan={rowspan || 1}
-      style={
-        data.type === 'class'
-          ? { backgroundColor: colors?.classes[data.class_code].normal }
-          : {}
-      }
+      style={{ backgroundColor: bg_color }}
     >
       {data.type === 'class' ? (
         <div className="class-code">
@@ -43,7 +52,7 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
       ) : data.type === 'bar' ? (
         <div className="bar-text">{data.text}</div>
       ) : (
-        <span className="empty-dot">.</span>
+        <span className="empty-dot"></span>
       )}
     </td>
   )
@@ -69,7 +78,9 @@ function WeekdaysHeader(_config: WeekdayConfig) {
           <th
             key={day}
             className="weekday-header"
-            style={{ backgroundColor: colors?.weekdays[day].normal }}
+            style={{
+              backgroundColor: colors?.weekdays[day].normal,
+            }}
           >
             <p>{day}</p>
           </th>

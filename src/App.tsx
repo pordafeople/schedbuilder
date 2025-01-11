@@ -6,10 +6,15 @@ import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
 import Schedule from './render/Schedule'
 import Classes from './render/Classes'
-import { DisplayData, get_display_data } from './render/display_data'
+import {
+  DISPLAY_DATA_DEFAULT,
+  DisplayData,
+  get_display_data,
+} from './render/display_data'
 import ImageRenderer from './output/ImageRenderer'
 
-export const DisplayDataContext = createContext<DisplayData | null>(null)
+export const DisplayDataContext =
+  createContext<DisplayData>(DISPLAY_DATA_DEFAULT)
 
 function App() {
   const [text, setText] = useState(sample_text)
@@ -28,7 +33,11 @@ function App() {
       </div>
       <div>
         <h2>Rendering</h2>
-        <div id="render-source" className="render-container">
+        <div
+          id="render-source"
+          className="render-container"
+          style={{ backgroundColor: display_data.bg_color }}
+        >
           <h1>Schedule</h1>
           <Schedule {...schedule} />
           <Classes classes={classes} />

@@ -54,11 +54,11 @@ td.time {
 }
 
 .timeAM {
-  color: #007bff;
+  color: #048;
 }
 
 .timePM {
-  color: #dc3545;
+  color: #804;
 }
 
 /* Cell types */

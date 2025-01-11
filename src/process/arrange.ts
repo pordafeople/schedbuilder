@@ -12,29 +12,33 @@ import {
     ClassPeriod,
 } from './parse'
 
-export type TimeSlot = null | {
+export type TimeSlot = {
     weekday: Weekday
     rowspan: number
     colspan: number
+    duration: TimeMinutes
     data:
         | { type: 'class'; class_data: ClassData; class_period: ClassPeriod }
         | { type: 'bar'; text: string }
         | { type: 'empty' }
 }
 
-function empty_slot(weekday: Weekday): TimeSlot {
+function empty_slot(weekday: Weekday, duration: TimeMinutes): TimeSlot {
     return {
         weekday,
         rowspan: 1,
         colspan: 1,
+        duration,
         data: { type: 'empty' },
     }
 }
 
+const DEFAULT_SLOT_DURATION: TimeMinutes = 60
+
 export type ScheduleRow = {
     time: Time
-    size: number
-    columns: TimeSlot[]
+    duration: TimeMinutes
+    columns: (TimeSlot | null)[]
 }
 
 export type WeekdayConfig = {
@@ -80,10 +84,10 @@ function arrange_schedule(data: SisData): ScheduleTable {
     const table: ScheduleRow[] = []
 
     // get all the unique timestamps in the data and sort them
-    const minutes = get_times(data)
+    const times = get_times(data)
 
     // no timestamps means no data
-    if (minutes.length === 0) {
+    if (times.length === 0) {
         return {
             weekday_config: WEEKDAY_CONFIG_DEFAULT,
             table,
@@ -92,13 +96,14 @@ function arrange_schedule(data: SisData): ScheduleTable {
 
     // fill the table with empty cells
     // compute the size of each row by the number of minutes between each timestamp
-    minutes.push(minutes[minutes.length - 1] + 30)
-    let prev_minutes = minutes[0]
-    for (const time of minutes.slice(1)) {
+    times.push(times[times.length - 1] + DEFAULT_SLOT_DURATION)
+    let prev_minutes = times[0]
+    for (const time of times.slice(1)) {
+        const duration = time - prev_minutes
         table.push({
             time: minutes_time(prev_minutes),
-            size: time - prev_minutes,
-            columns: WEEKDAYS.map(empty_slot),
+            duration: duration,
+            columns: WEEKDAYS.map((weekday) => empty_slot(weekday, duration)),
         })
         prev_minutes = time
     }
@@ -107,8 +112,8 @@ function arrange_schedule(data: SisData): ScheduleTable {
     for (const class_data of data.classes) {
         for (const class_period of class_data.schedule) {
             const { start, end, weekdays } = class_period
-            const start_row = minutes.indexOf(time_minutes(start))
-            const end_row = minutes.indexOf(time_minutes(end))
+            const start_row = times.indexOf(time_minutes(start))
+            const end_row = times.indexOf(time_minutes(end))
             const rowspan = end_row - start_row
 
             for (const weekday of weekdays) {
@@ -118,6 +123,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
                     weekday,
                     colspan: 1,
                     rowspan,
+                    duration: times[end_row] - times[start_row],
                     data: {
                         type: 'class',
                         class_data,

@@ -1,13 +1,22 @@
 import { useContext } from 'react'
 import { DisplayDataContext } from '../App'
 import './Schedule.css'
-import { Time, time_str, WEEKDAYS } from '../process/parse'
+import { Time, time_str, TimeMinutes, WEEKDAYS } from '../process/parse'
 import {
   ScheduleRow,
   ScheduleTable,
   TimeSlot,
   WeekdayConfig,
 } from '../process/arrange'
+
+function compute_height(duration: TimeMinutes): number {
+  return duration / 20
+}
+
+function compute_font_size(duration: TimeMinutes): number {
+  return Math.min(60, duration) / 60
+  // return Math.min(30, duration) / 60
+}
 
 function TimeDisplay(time: Time) {
   const display_data = useContext(DisplayDataContext)
@@ -25,11 +34,8 @@ function TimeDisplay(time: Time) {
   )
 }
 
-function TimeSlotDisplay(tile: TimeSlot) {
-  if (tile === null) {
-    return null
-  }
-  const { weekday, rowspan, colspan, data } = tile
+function TimeSlotDisplay({ tile }: { tile: TimeSlot }) {
+  const { weekday, rowspan, colspan, duration, data } = tile
   const colors = useContext(DisplayDataContext)
   const bg_color =
     data.type === 'class'
@@ -46,7 +52,10 @@ function TimeSlotDisplay(tile: TimeSlot) {
       className={`cell ${data.type}-cell`}
       colSpan={colspan}
       rowSpan={rowspan}
-      style={{ backgroundColor: bg_color }}
+      style={{
+        backgroundColor: bg_color,
+        fontSize: `${compute_font_size(duration)}vw`,
+      }}
     >
       {data.type === 'class' ? (
         <>
@@ -62,21 +71,24 @@ function TimeSlotDisplay(tile: TimeSlot) {
   )
 }
 
-function ScheduleRowDisplay({ time, size, columns }: ScheduleRow) {
-  const height = `${size / 20}vw`
-  const font_size = Math.min(24, size / 2) / 16
+function ScheduleRowDisplay({ time, duration, columns }: ScheduleRow) {
+  const height = `${compute_height(duration)}vw`
+  const font_size = `${compute_font_size(duration) * 1.5}vw`
   return (
     <tr
-      key={time_str(time)}
       style={{
         minHeight: height,
         height,
         maxHeight: height,
-        fontSize: `${font_size}vw`,
+        fontSize: font_size,
       }}
     >
       <TimeDisplay {...time} />
-      {columns.map(TimeSlotDisplay)}
+      {columns
+        .filter((slot) => slot !== null)
+        .map((tile) => (
+          <TimeSlotDisplay key={tile.weekday} tile={tile} />
+        ))}
     </tr>
   )
 }
@@ -110,7 +122,11 @@ function Schedule({ weekday_config, table }: ScheduleTable) {
       <div className="schedule-container">
         <table className="main-container">
           <WeekdaysHeader {...weekday_config} />
-          <tbody>{table.map(ScheduleRowDisplay)}</tbody>
+          <tbody>
+            {table.map((row) => (
+              <ScheduleRowDisplay key={time_str(row.time)} {...row} />
+            ))}
+          </tbody>
         </table>
       </div>
     </div>

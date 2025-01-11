@@ -11,7 +11,7 @@ function ImageRenderer({ for: target }: { for: string }) {
     const element = document.getElementById(target)
     if (element === null) {
       console.log(
-        `Attempted to render to canvas, but target ID '${target}' did not exist.`
+        `Attempted to render to canvas, but target ID '${target}' did not exist.`,
       )
       return
     }

@@ -14,14 +14,13 @@ export const DisplayDataContext = createContext<DisplayData | null>(null)
 function App() {
   const [text, setText] = useState(sample_text)
 
-  const sisData = parse_sis(text)
-  const sisTableData = arrange(sisData)
-  const { classes, schedule } = sisTableData
+  const sis_data = parse_sis(text)
+  const sis_table_data = arrange(sis_data)
+  const display_data = get_display_data(sis_table_data)
 
-  const displayData = get_display_data(sisTableData)
-
+  const { classes, schedule } = sis_table_data
   return (
-    <DisplayDataContext.Provider value={displayData}>
+    <DisplayDataContext.Provider value={display_data}>
       <h1>SchedBuilder</h1>
       <div>
         <h2>Input</h2>

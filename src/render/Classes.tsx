@@ -28,10 +28,12 @@ function ClassDisplay({ code, subject, title, teacher }: ClassData) {
   )
 }
 
-export default function Classes({ classes }: { classes: ClassList }) {
+function Classes({ classes }: { classes: ClassList }) {
   return (
     <table className="class-table">
       <tbody>{classes.map(ClassDisplay)}</tbody>
     </table>
   )
 }
+
+export default Classes

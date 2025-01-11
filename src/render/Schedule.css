@@ -34,7 +34,7 @@ textarea {
   background-color: #f8f9fa;
   font-weight: bold;
   font-size: 2vw;
-  color: #333;
+  color: #222;
 }
 
 .main-container td.empty {
@@ -85,7 +85,7 @@ th.weekday-header {
 .class-cell .class-code {
   /* font-size: 14px; */
   font-weight: normal;
-  color: #555;
+  color: #444;
 }
 
 /* .class-cell .class-text {

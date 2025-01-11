@@ -3,14 +3,23 @@
   height: 20%;
   color: black;
   font-weight: bold;
+  font-size: 1vw;
+}
+
+tr.class td {
+  padding: 6px;
 }
 
 .class p {
   margin: 0;
-  font-weight: normal;
 }
 
-@media screen and (max-width: 600px) {
+.teacher-email {
+  font-weight: normal;
+  color: #222;
+}
+
+/* @media screen and (max-width: 600px) {
   .class-table {
     font-size: 10px;
   }
@@ -20,4 +29,4 @@
   .class-table {
     font-size: 8px;
   }
-}
+} */

@@ -16,13 +16,16 @@ function TimeDisplay(time: Time) {
       ? { class_name: 'timeAM', bg_color: display_data.time_colors.am }
       : { class_name: 'timePM', bg_color: display_data.time_colors.pm }
   return (
-    <td className={`time ${class_name}`} style={{ backgroundColor: bg_color }}>
-      {time_str(time)}
+    <td
+      className={`cell time ${class_name}`}
+      style={{ backgroundColor: bg_color }}
+    >
+      <p>{time_str(time)}</p>
     </td>
   )
 }
 
-function TimeSlotDisplay(tile: TimeSlot | null) {
+function TimeSlotDisplay(tile: TimeSlot) {
   if (tile === null) {
     return null
   }
@@ -30,27 +33,28 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
   const colors = useContext(DisplayDataContext)
   const bg_color =
     data.type === 'class'
-      ? colors.classes[data.class_code]?.normal || '#4ff'
+      ? colors.classes[data.class_data.code]?.normal || '#0ff'
       : data.type === 'bar'
       ? colors.bar_color
       : data.type === 'empty'
       ? colors.weekdays[weekday].light
-      : '#0ff' // this should never happen
+      : '#f0f' // this should never happen
 
   return (
     <td
       key={weekday}
-      className={`${data.type}-cell`}
-      colSpan={colspan || 1}
-      rowSpan={rowspan || 1}
+      className={`cell ${data.type}-cell`}
+      colSpan={colspan}
+      rowSpan={rowspan}
       style={{ backgroundColor: bg_color }}
     >
       {data.type === 'class' ? (
-        <div className="class-code">
-          <p>{data.class_code}</p>
-        </div>
+        <>
+          <p className="class-text">{data.class_data.subject}</p>
+          <p className="class-code">{data.class_period.room}</p>
+        </>
       ) : data.type === 'bar' ? (
-        <div className="bar-text">{data.text}</div>
+        <p className="bar-text">{data.text}</p>
       ) : (
         <span className="empty-dot"></span>
       )}
@@ -58,11 +62,21 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
   )
 }
 
-function ScheduleRowDisplay(row: ScheduleRow) {
+function ScheduleRowDisplay({ time, size, columns }: ScheduleRow) {
+  const height = `${size / 20}vw`
+  const font_size = Math.min(24, size / 2) / 16
   return (
-    <tr key={time_str(row.time)}>
-      <TimeDisplay {...row.time} />
-      {row.columns.map(TimeSlotDisplay)}
+    <tr
+      key={time_str(time)}
+      style={{
+        minHeight: height,
+        height,
+        maxHeight: height,
+        fontSize: `${font_size}vw`,
+      }}
+    >
+      <TimeDisplay {...time} />
+      {columns.map(TimeSlotDisplay)}
     </tr>
   )
 }
@@ -79,7 +93,7 @@ function WeekdaysHeader(_config: WeekdayConfig) {
             key={day}
             className="weekday-header"
             style={{
-              backgroundColor: colors?.weekdays[day].normal,
+              backgroundColor: colors.weekdays[day].normal,
             }}
           >
             <p>{day}</p>

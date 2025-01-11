@@ -10,13 +10,13 @@ export type ColorSet = {
 
 export type WeekdayColors = Record<Weekday, ColorSet>
 export const WEEKDAY_COLORS_DEFAULT: WeekdayColors = {
-    S: { light: '#fdd', normal: '#f99' },
+    S: { light: '#fee', normal: '#f99' },
     M: { light: '#fff', normal: '#ccc' },
     T: { light: '#eee', normal: '#aaa' },
     W: { light: '#fff', normal: '#ccc' },
     Th: { light: '#eee', normal: '#aaa' },
     F: { light: '#fff', normal: '#ccc' },
-    Sa: { light: '#ddd', normal: '#999' },
+    Sa: { light: '#eef', normal: '#99f' },
 }
 export function get_weekday_colors(_config: WeekdayConfig): WeekdayColors {
     // no logic here
@@ -59,7 +59,7 @@ export type DisplayData = {
 
 export const DISPLAY_DATA_DEFAULT: DisplayData = {
     bg_color: '#222',
-    time_colors: { am: '#feb', pm: '#ebf' },
+    time_colors: { am: '#feb', pm: '#edf' },
     bar_color: '#a8c',
     weekdays: {},
     classes: {},

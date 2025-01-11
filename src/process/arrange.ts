@@ -7,9 +7,9 @@ import {
     TimeMinutes,
     weekday_index,
     WeekdayIndex,
-    ClassCode,
     Weekday,
     WEEKDAYS,
+    ClassPeriod,
 } from './parse'
 
 export type TimeSlot = null | {
@@ -17,7 +17,7 @@ export type TimeSlot = null | {
     rowspan: number
     colspan: number
     data:
-        | { type: 'class'; class_code: ClassCode }
+        | { type: 'class'; class_data: ClassData; class_period: ClassPeriod }
         | { type: 'bar'; text: string }
         | { type: 'empty' }
 }
@@ -106,11 +106,12 @@ function arrange_schedule(data: SisData): ScheduleTable {
     // fill in the table data
     for (const class_data of data.classes) {
         for (const class_period of class_data.schedule) {
-            const start_row = minutes.indexOf(time_minutes(class_period.start))
-            const end_row = minutes.indexOf(time_minutes(class_period.end))
+            const { start, end, weekdays } = class_period
+            const start_row = minutes.indexOf(time_minutes(start))
+            const end_row = minutes.indexOf(time_minutes(end))
             const rowspan = end_row - start_row
 
-            for (const weekday of class_period.weekdays) {
+            for (const weekday of weekdays) {
                 const col = weekday_index(weekday)
                 // add the main subject tile
                 table[start_row].columns[col] = {
@@ -119,7 +120,8 @@ function arrange_schedule(data: SisData): ScheduleTable {
                     rowspan,
                     data: {
                         type: 'class',
-                        class_code: class_data.code,
+                        class_data,
+                        class_period,
                     },
                 }
                 // delete the tiles that the subject overlaps

@@ -1,4 +1,11 @@
 .class-table {
   width: 100%;
   height: 20%;
+  color: black;
+  font-weight: bold;
+}
+
+.class p {
+  margin: 0;
+  font-weight: normal;
 }

@@ -13,6 +13,11 @@ import {
 } from './parse'
 
 export type Color = string
+export type ColorSet = {
+    light: Color
+    normal: Color
+    // dark: Color
+}
 
 export type TimeSlot = null | {
     weekday: Weekday
@@ -42,12 +47,20 @@ export type ScheduleRow = {
 export type WeekdayConfig = {
     start: WeekdayIndex
     end: WeekdayIndex
-    colors: Color[]
+    colors: ColorSet[]
 }
-export const WEEKDAY_CONFIG_DEFAULT = {
+export const WEEKDAY_CONFIG_DEFAULT: WeekdayConfig = {
     start: 1,
     end: 7,
-    colors: [/*'#ccc',*/ '#eee', '#ddd', '#eee', '#ddd', '#eee', '#ccc'],
+    colors: [
+        // { light: '#ecc', normal: '#dbb' },
+        { light: '#eee', normal: '#ddd' },
+        { light: '#ddd', normal: '#ccc' },
+        { light: '#eee', normal: '#ddd' },
+        { light: '#ddd', normal: '#ccc' },
+        { light: '#eee', normal: '#ddd' },
+        { light: '#ccc', normal: '#bbb' },
+    ],
 }
 
 export type ScheduleTable = {
@@ -78,23 +91,23 @@ function get_times(data: SisData): TimeMinutes[] {
 
 export type ClassDisplayData = {
     class_data: ClassData
-    color: Color
+    color: ColorSet
 }
 
 export type ClassList = ClassDisplayData[]
 
 function get_classes(data: SisData): ClassList {
     const PALETTE_DEFAULT = [
-        '#f88',
-        '#ea8',
-        '#dd8',
-        '#8e8', // one green instead of  '#ae8', '#8f8', '#8ea',
-        '#8dd',
-        '#8ae',
-        '#88f',
-        '#a8e',
-        '#d8d',
-        '#e8a',
+        { light: '#faa', normal: '#f88' },
+        { light: '#fca', normal: '#ea8' },
+        { light: '#dda', normal: '#dd8' },
+        { light: '#aea', normal: '#8e8' }, // one green instead of  '#ae8', '#8f8', '#8ea'
+        { light: '#add', normal: '#8dd' },
+        { light: '#acf', normal: '#8ae' },
+        { light: '#aaf', normal: '#88f' },
+        { light: '#caf', normal: '#a8e' },
+        { light: '#dad', normal: '#d8d' },
+        { light: '#fac', normal: '#e8a' },
     ]
     // TODO: auto-gen palette
     return data.classes.map((class_data, index) => ({

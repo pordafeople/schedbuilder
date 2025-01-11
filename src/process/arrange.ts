@@ -8,22 +8,27 @@ import {
     weekday_index,
     WeekdayIndex,
     ClassCode,
+    Weekday,
+    WEEKDAYS,
 } from './parse'
 
-export type Color = string
-
-const EMPTY_SLOT: TimeSlot = {
-    data: { type: 'empty' },
-    rowspan: 1,
-    colspan: 1,
-}
 export type TimeSlot = null | {
+    weekday: Weekday
+    rowspan: number
+    colspan: number
     data:
         | { type: 'class'; class_code: ClassCode }
         | { type: 'bar'; text: string }
         | { type: 'empty' }
-    rowspan: number
-    colspan: number
+}
+
+function empty_slot(weekday: Weekday): TimeSlot {
+    return {
+        weekday,
+        rowspan: 1,
+        colspan: 1,
+        data: { type: 'empty' },
+    }
 }
 
 export type ScheduleRow = {
@@ -35,12 +40,10 @@ export type ScheduleRow = {
 export type WeekdayConfig = {
     start: WeekdayIndex
     end: WeekdayIndex
-    colors: Color[]
 }
-export const WEEKDAY_CONFIG_DEFAULT = {
+export const WEEKDAY_CONFIG_DEFAULT: WeekdayConfig = {
     start: 1,
     end: 7,
-    colors: [/*'#ccc',*/ '#eee', '#ddd', '#eee', '#ddd', '#eee', '#ccc'],
 }
 
 export type ScheduleTable = {
@@ -69,32 +72,7 @@ function get_times(data: SisData): TimeMinutes[] {
     return key_sort_dedup(times, time_minutes)
 }
 
-export type ClassDisplayData = {
-    class_data: ClassData
-    color: Color
-}
-
-export type ClassList = ClassDisplayData[]
-
-function get_classes(data: SisData): ClassList {
-    const PALETTE_DEFAULT = [
-        '#f88',
-        '#ea8',
-        '#dd8',
-        '#8e8', // one green instead of  '#ae8', '#8f8', '#8ea',
-        '#8dd',
-        '#8ae',
-        '#88f',
-        '#a8e',
-        '#d8d',
-        '#e8a',
-    ]
-    // TODO: auto-gen palette
-    return data.classes.map((class_data, index) => ({
-        class_data,
-        color: PALETTE_DEFAULT[index % PALETTE_DEFAULT.length],
-    }))
-}
+export type ClassList = ClassData[]
 
 // TODO: remove unnecessary weekdays
 
@@ -120,7 +98,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
         table.push({
             time: minutes_time(prev_minutes),
             size: time - prev_minutes,
-            columns: new Array(7).fill(EMPTY_SLOT),
+            columns: WEEKDAYS.map(empty_slot),
         })
         prev_minutes = time
     }
@@ -136,12 +114,13 @@ function arrange_schedule(data: SisData): ScheduleTable {
                 const col = weekday_index(weekday)
                 // add the main subject tile
                 table[start_row].columns[col] = {
+                    weekday,
+                    colspan: 1,
+                    rowspan,
                     data: {
                         type: 'class',
                         class_code: class_data.code,
                     },
-                    colspan: 1,
-                    rowspan,
                 }
                 // delete the tiles that the subject overlaps
                 for (let row = start_row + 1; row < end_row; row++) {
@@ -158,7 +137,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
     }
 }
 
-export type SisDisplayData = {
+export type SisTableData = {
     classes: ClassList
     schedule: ScheduleTable
 }
@@ -168,9 +147,9 @@ export type SisDisplayData = {
  * @param data the SIS data to arrange
  * @returns the subjects and the schedule
  */
-export function arrange(data: SisData): SisDisplayData {
+export function arrange(data: SisData): SisTableData {
     return {
-        classes: get_classes(data),
+        classes: data.classes,
         schedule: arrange_schedule(data),
     }
 }

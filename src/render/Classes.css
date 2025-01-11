@@ -1,4 +1,23 @@
 .class-table {
   width: 100%;
   height: 20%;
+  color: black;
+  font-weight: bold;
+}
+
+.class p {
+  margin: 0;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 600px) {
+  .class-table {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 321px) {
+  .class-table {
+    font-size: 8px;
+  }
 }

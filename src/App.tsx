@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import './App.css'
 import InputBox from './input/InputBox'
 import Schedule from './render/Schedule'
@@ -7,16 +7,21 @@ import ImageRenderer from './output/ImageRenderer'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
 import { sample_text } from './input/sampleinput'
+import { DisplayData, get_display_data } from './render/DisplayData'
+
+export const DisplayDataContext = createContext<DisplayData | null>(null)
 
 function App() {
   const [text, setText] = useState(sample_text)
 
-  const parsed = parse_sis(text)
-  console.log(parsed)
-  const { classes, schedule } = arrange(parsed)
+  const sisData = parse_sis(text)
+  const sisTableData = arrange(sisData)
+  const { classes, schedule } = sisTableData
+
+  const [displayData, setDisplayData] = useState(get_display_data(sisTableData))
 
   return (
-    <>
+    <DisplayDataContext.Provider value={displayData}>
       <h1>SchedBuilder</h1>
       <div>
         <h2>Input</h2>
@@ -34,7 +39,7 @@ function App() {
         <h2>Image Renderer</h2>
         <ImageRenderer for="render-source" />
       </div>
-    </>
+    </DisplayDataContext.Provider>
   )
 }
 

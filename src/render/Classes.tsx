@@ -1,22 +1,26 @@
-import { ClassDisplayData, ClassList } from '../process/arrange'
+import { useContext } from 'react'
+import { DisplayDataContext } from '../App'
 import './Classes.css'
+import { ClassData } from '../process/parse'
+import { ClassList } from '../process/arrange'
 
-function ClassDisplay({ class_data, color }: ClassDisplayData) {
+function ClassDisplay({ code, subject, title, teacher }: ClassData) {
+  const color = useContext(DisplayDataContext)?.classes[code] || {
+    light: '#aaa',
+    normal: '#888',
+  }
+
   return (
-    <tr
-      key={class_data.code}
-      className="class"
-      style={{ backgroundColor: color.light }}
-    >
-      <td style={{ backgroundColor: color.normal }}>{class_data.code}</td>
-      <td>{class_data.subject}</td>
-      <td>{class_data.title}</td>
+    <tr key={code} className="class" style={{ backgroundColor: color.light }}>
+      <td style={{ backgroundColor: color.normal }}>{code}</td>
+      <td>{subject}</td>
+      <td>{title}</td>
       <td>
-        {class_data.teacher.family_name}, {class_data.teacher.given_name}
+        {teacher.family_name}, {teacher.given_name}
         <br />
         <label>
-          {class_data.teacher.emails.map((email) => (
-            <p>{email}</p>
+          {teacher.emails.map((email) => (
+            <p key={email}>{email}</p>
           ))}
         </label>
       </td>

@@ -12,13 +12,6 @@ import {
     WEEKDAYS,
 } from './parse'
 
-export type Color = string
-export type ColorSet = {
-    light: Color
-    normal: Color
-    // dark: Color
-}
-
 export type TimeSlot = null | {
     weekday: Weekday
     rowspan: number
@@ -47,20 +40,10 @@ export type ScheduleRow = {
 export type WeekdayConfig = {
     start: WeekdayIndex
     end: WeekdayIndex
-    colors: ColorSet[]
 }
 export const WEEKDAY_CONFIG_DEFAULT: WeekdayConfig = {
     start: 1,
     end: 7,
-    colors: [
-        // { light: '#ecc', normal: '#dbb' },
-        { light: '#eee', normal: '#ddd' },
-        { light: '#ddd', normal: '#ccc' },
-        { light: '#eee', normal: '#ddd' },
-        { light: '#ddd', normal: '#ccc' },
-        { light: '#eee', normal: '#ddd' },
-        { light: '#ccc', normal: '#bbb' },
-    ],
 }
 
 export type ScheduleTable = {
@@ -89,32 +72,7 @@ function get_times(data: SisData): TimeMinutes[] {
     return key_sort_dedup(times, time_minutes)
 }
 
-export type ClassDisplayData = {
-    class_data: ClassData
-    color: ColorSet
-}
-
-export type ClassList = ClassDisplayData[]
-
-function get_classes(data: SisData): ClassList {
-    const PALETTE_DEFAULT = [
-        { light: '#faa', normal: '#f88' },
-        { light: '#fca', normal: '#ea8' },
-        { light: '#dda', normal: '#dd8' },
-        { light: '#aea', normal: '#8e8' }, // one green instead of  '#ae8', '#8f8', '#8ea'
-        { light: '#add', normal: '#8dd' },
-        { light: '#acf', normal: '#8ae' },
-        { light: '#aaf', normal: '#88f' },
-        { light: '#caf', normal: '#a8e' },
-        { light: '#dad', normal: '#d8d' },
-        { light: '#fac', normal: '#e8a' },
-    ]
-    // TODO: auto-gen palette
-    return data.classes.map((class_data, index) => ({
-        class_data,
-        color: PALETTE_DEFAULT[index % PALETTE_DEFAULT.length],
-    }))
-}
+export type ClassList = ClassData[]
 
 // TODO: remove unnecessary weekdays
 
@@ -179,7 +137,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
     }
 }
 
-export type SisDisplayData = {
+export type SisTableData = {
     classes: ClassList
     schedule: ScheduleTable
 }
@@ -189,9 +147,9 @@ export type SisDisplayData = {
  * @param data the SIS data to arrange
  * @returns the subjects and the schedule
  */
-export function arrange(data: SisData): SisDisplayData {
+export function arrange(data: SisData): SisTableData {
     return {
-        classes: get_classes(data),
+        classes: data.classes,
         schedule: arrange_schedule(data),
     }
 }

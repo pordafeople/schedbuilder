@@ -23,13 +23,13 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
   }
   const colors = useContext(DisplayDataContext)
 
-  const { data } = tile
+  const { weekday, rowspan, colspan, data } = tile
   return (
     <td
-      key={tile.weekday}
+      key={weekday}
       className={`${data.type}-cell`}
-      colSpan={tile.colspan || 1}
-      rowSpan={tile.rowspan || 1}
+      colSpan={colspan || 1}
+      rowSpan={rowspan || 1}
       style={
         data.type === 'class'
           ? { backgroundColor: colors?.classes[data.class_code].normal }

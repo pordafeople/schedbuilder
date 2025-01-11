@@ -18,7 +18,7 @@ function App() {
   const sisTableData = arrange(sisData)
   const { classes, schedule } = sisTableData
 
-  const [displayData, setDisplayData] = useState(get_display_data(sisTableData))
+  const displayData = get_display_data(sisTableData)
 
   return (
     <DisplayDataContext.Provider value={displayData}>

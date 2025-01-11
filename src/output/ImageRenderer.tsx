@@ -15,7 +15,6 @@ function ImageRenderer({ for: target }: { for: string }) {
       )
       return
     }
-    console.log(element)
     html2canvas(element).then((canvas) => {
       // Convert the canvas to a data URL (image format)
       const imageUrl = canvas.toDataURL('image/png')
@@ -46,7 +45,11 @@ function ImageRenderer({ for: target }: { for: string }) {
             <h3 style={{ display: 'inline' }}>Generated Image: </h3>
             <button onClick={download_image}>Download Image!</button>
             <br />
-            <img className='capture-Img' src={canvasUrl} alt="Captured Canvas" />
+            <img
+              className="capture-Img"
+              src={canvasUrl}
+              alt="Captured Canvas"
+            />
           </div>
         </>
       )}

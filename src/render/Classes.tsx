@@ -5,7 +5,7 @@ import { ClassData } from '../process/parse'
 import { ClassList } from '../process/arrange'
 
 function ClassDisplay({ code, subject, title, teacher }: ClassData) {
-  const color = useContext(DisplayDataContext)?.classes[code] || {
+  const color = useContext(DisplayDataContext).classes[code] || {
     light: '#aaa',
     normal: '#888',
   }
@@ -16,13 +16,14 @@ function ClassDisplay({ code, subject, title, teacher }: ClassData) {
       <td>{subject}</td>
       <td>{title}</td>
       <td>
-        {teacher.family_name}, {teacher.given_name}
-        <br />
-        <label>
-          {teacher.emails.map((email) => (
-            <p key={email}>{email}</p>
-          ))}
-        </label>
+        <p className="teacher-name">
+          {teacher.family_name}, {teacher.given_name}
+        </p>
+        {teacher.emails.map((email) => (
+          <p key={email} className="teacher-email">
+            {email}
+          </p>
+        ))}
       </td>
     </tr>
   )

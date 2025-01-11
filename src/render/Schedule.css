@@ -24,17 +24,17 @@ textarea {
   text-align: center;
 }
 
-.main-container th,
 .main-container td {
   border: 1px solid #ccc;
   padding: 10px;
 }
 
 .main-container th.weekday-header {
+  min-width: 3vw;
   background-color: #f8f9fa;
   font-weight: bold;
-  font-size: 14px;
-  color: #333;
+  font-size: 2vw;
+  color: #222;
 }
 
 .main-container td.empty {
@@ -47,34 +47,50 @@ textarea {
 }
 
 /* Time column styles */
-.time {
+td.time {
   font-weight: bold;
   background-color: #f8f9fa;
+  padding: 2px;
 }
 
 .timeAM {
-  color: #007bff;
+  color: #048;
 }
 
 .timePM {
-  color: #dc3545;
+  color: #804;
 }
 
 /* Cell types */
+td.cell,
+th.cell,
+th.weekday-header {
+  padding: 0px;
+  > p {
+    margin: 0;
+  }
+}
+
 .class-cell {
   background-color: #eaf5ff;
-  color: #007bff;
+  color: #000000;
   font-weight: bold;
 }
 
-.class-cell .class-code {
-  font-size: 14px;
+.class-cell .class-text {
+  /* font-size: 14px; */
+  margin: 0;
 }
 
-.class-cell .class-text {
-  font-size: 12px;
-  color: #555;
+.class-cell .class-code {
+  /* font-size: 14px; */
+  font-weight: normal;
+  color: #444;
 }
+
+/* .class-cell .class-text {
+  font-size: 12px;
+} */
 
 .bar-cell {
   background-color: #fff3cd;
@@ -98,10 +114,13 @@ textarea {
 /* Header row styles */
 thead .border-bottom th {
   border-bottom: 2px solid #333;
+  height: 3vw;
 }
 
 /* Responsive styling */
-@media (max-width: 768px) {
+/* deprecated in favor of scaling relative to vw */
+
+/* @media (max-width: 768px) {
   textarea {
     width: 100%;
     font-size: 12px;
@@ -136,4 +155,4 @@ thead .border-bottom th {
   .main-container {
     font-size: 8px;
   }
-}
+} */

@@ -10,13 +10,13 @@ export type ColorSet = {
 
 export type WeekdayColors = Record<Weekday, ColorSet>
 export const WEEKDAY_COLORS_DEFAULT: WeekdayColors = {
-    S: { light: '#ecc', normal: '#dbb' },
-    M: { light: '#eee', normal: '#ddd' },
-    T: { light: '#ddd', normal: '#ccc' },
-    W: { light: '#eee', normal: '#ddd' },
-    Th: { light: '#ddd', normal: '#ccc' },
-    F: { light: '#eee', normal: '#ddd' },
-    Sa: { light: '#ccc', normal: '#bbb' },
+    S: { light: '#fee', normal: '#f99' },
+    M: { light: '#fff', normal: '#ccc' },
+    T: { light: '#eee', normal: '#aaa' },
+    W: { light: '#fff', normal: '#ccc' },
+    Th: { light: '#eee', normal: '#aaa' },
+    F: { light: '#fff', normal: '#ccc' },
+    Sa: { light: '#eef', normal: '#99f' },
 }
 export function get_weekday_colors(_config: WeekdayConfig): WeekdayColors {
     // no logic here
@@ -43,14 +43,31 @@ export function get_class_colors(classes: ClassList): ClassColors {
     }, {} as ClassColors)
 }
 
+export type TimeColors = {
+    am: Color
+    pm: Color
+}
+
 export type DisplayData = {
     // resolution: [number, number] // TODO
+    bg_color: Color
+    time_colors: TimeColors
+    bar_color: Color
     weekdays: WeekdayColors
     classes: ClassColors
 }
 
+export const DISPLAY_DATA_DEFAULT: DisplayData = {
+    bg_color: '#222',
+    time_colors: { am: '#feb', pm: '#edf' },
+    bar_color: '#a8c',
+    weekdays: {},
+    classes: {},
+}
+
 export function get_display_data(data: SisTableData): DisplayData {
     return {
+        ...DISPLAY_DATA_DEFAULT,
         weekdays: get_weekday_colors(data.schedule.weekday_config),
         classes: get_class_colors(data.classes),
     }

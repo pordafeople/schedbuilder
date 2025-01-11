@@ -46,7 +46,7 @@ function ImageRenderer({ for: target }: { for: string }) {
             <button onClick={download_image}>Download Image!</button>
             <br />
             <img
-              className="capture-Img"
+              className="capture-img"
               src={canvasUrl}
               alt="Captured Canvas"
             />

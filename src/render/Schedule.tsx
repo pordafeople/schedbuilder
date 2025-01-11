@@ -37,7 +37,9 @@ function TimeSlotDisplay(tile: TimeSlot | null) {
       }
     >
       {data.type === 'class' ? (
-        <div className="class-code"><p>{data.class_code}</p></div>
+        <div className="class-code">
+          <p>{data.class_code}</p>
+        </div>
       ) : data.type === 'bar' ? (
         <div className="bar-text">{data.text}</div>
       ) : (

@@ -22,6 +22,7 @@ textarea {
   width: 100%;
   max-width: 1200px;
   text-align: center;
+  border: 2px solid #333;
 }
 
 .main-container td {
@@ -35,6 +36,7 @@ textarea {
   font-weight: bold;
   font-size: 2vw;
   color: #222;
+  border: 2px solid #333;
 }
 
 .main-container td.empty {
@@ -46,19 +48,45 @@ textarea {
   border: none;
 }
 
+/* Noon row styles */
+tr.noon td {
+  border-top: 2px solid #333;
+}
+
+tr.noon .time label {
+  border: 1px solid #222;
+  top: -0.85vw;
+}
+
 /* Time column styles */
 td.time {
-  font-weight: bold;
   background-color: #f8f9fa;
   padding: 2px;
+  vertical-align: top;
+  border-right: 2px solid #333;
+}
+
+/* FIXME: offset breaks at low screen width */
+.time label {
+  background-color: #fed;
+  padding: 2px 6px;
+  font-weight: bold;
+  position: relative;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 1vw;
+  top: -0.75vw;
 }
 
 .timeAM {
-  color: #048;
+  color: #824;
 }
-
+.noon .timePM {
+  color: #a60;
+}
 .timePM {
-  color: #804;
+  color: #248;
 }
 
 /* Cell types */
@@ -66,33 +94,37 @@ td.cell,
 th.cell,
 th.weekday-header {
   padding: 0px;
-  > p {
-    margin: 0;
-  }
+}
+
+.weekday-header p {
+  margin: 4px;
+}
+
+.cell p {
+  margin: 0;
 }
 
 .class-cell {
   background-color: #eaf5ff;
   color: #000000;
   font-weight: bold;
+  /* border-radius: 10px; */
 }
 
 .class-cell .class-text {
-  /* font-size: 14px; */
   margin: 0;
 }
 
 .class-cell .class-code {
-  /* font-size: 14px; */
   font-weight: normal;
-  color: #444;
+  color: #333;
 }
 
 /* .class-cell .class-text {
   font-size: 12px;
 } */
 
-.bar-cell {
+/* .bar-cell {
   background-color: #fff3cd;
   color: #856404;
   font-weight: bold;
@@ -101,7 +133,7 @@ th.weekday-header {
 
 .bar-cell .bar-text {
   font-size: 12px;
-}
+} */
 
 .empty-cell {
   background-color: #f5f5f5;

@@ -80,10 +80,13 @@ td.time {
 }
 
 .timeAM {
-  color: #248;
+  color: #824;
+}
+.noon .timePM {
+  color: #a60;
 }
 .timePM {
-  color: #824;
+  color: #248;
 }
 
 /* Cell types */

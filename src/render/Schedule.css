@@ -95,11 +95,11 @@ th.weekday-header {
   margin: 0;
 }
 
-.class-cell {
+td.class-cell {
   background-color: #eaf5ff;
-  color: #000000;
+  color: #000;
   font-weight: bold;
-  /* border-radius: 10px; */
+  border: 2px solid #333;
 }
 
 .class-cell .class-text {

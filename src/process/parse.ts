@@ -142,16 +142,16 @@ export type SisData = {
 export function parse_sis(text: string): { sis_data: SisData; err?: string } {
     text = '\n' + text.replace(/\r/g, '') + '\n'
     const classes = [...text.matchAll(class_regex)].map(parse_class)
-    const pasted_subjects = [...text.matchAll(/\n\d/g)].length
+    const pasted_subjects = [...text.matchAll(/\n\s*\d+[^@\n]+\n/g)].length
     let err = undefined
     if (classes.length !== pasted_subjects) {
         err =
-            `There are missing subjects in the output.\n` +
+            `There are missing subjects/classes in the output.\n` +
             `\n` +
-            `- Input subjects: ${pasted_subjects} (double check)\n` +
-            `- Detected subjects: ${classes.length}\n` +
+            `- Detected classes in input: ${pasted_subjects} (double check)\n` +
+            `- Fully identified classes: ${classes.length}\n` +
             `\n` +
-            `The number of input subjects was determined by the number of slashes '/' in the input box.\n` +
+            `The number of input subjects was determined by finding numbers at the start of each line.` +
             `\n` +
             `Please report this and include the data for each subject that went missing.`
     }

@@ -7,15 +7,6 @@
   margin-bottom: 30px;
 }
 
-textarea {
-  margin-bottom: 20px;
-  font-family: monospace;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
-}
-
 /* Main table styles */
 .main-container {
   border-collapse: collapse;

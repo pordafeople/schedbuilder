@@ -4,6 +4,7 @@ import { sample_text } from './input/sample_input'
 import InputBox from './input/InputBox'
 import { parse_sis } from './process/parse'
 import { arrange } from './process/arrange'
+import Remarks from './process/Remarks'
 import Schedule from './render/Schedule'
 import Classes from './render/Classes'
 import {
@@ -27,15 +28,14 @@ function App() {
   return (
     <DisplayDataContext.Provider value={display_data}>
       <h1>SchedBuilder</h1>
+      <p>pls double check everything i don want u to miss classes</p>
       <div>
         <h2>Input</h2>
         <InputBox text={text} setText={setText} />
-        {err ? (
-          <div className="error">
-            <h1>WARNING</h1>
-            <textarea rows={err.split('\n').length} value={err} readOnly />
-          </div>
-        ) : null}
+      </div>
+      <div>
+        <h2>Processing</h2>
+        <Remarks sis_data={sis_data} err={err} />
       </div>
       <div>
         <h2>Rendering</h2>

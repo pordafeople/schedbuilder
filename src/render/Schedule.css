@@ -48,6 +48,16 @@ textarea {
   border: none;
 }
 
+/* Noon row styles */
+tr.noon td {
+  border-top: 2px solid #333;
+}
+
+tr.noon .time label {
+  border: 1px solid #222;
+  top: -0.85vw;
+}
+
 /* Time column styles */
 td.time {
   background-color: #f8f9fa;
@@ -60,12 +70,13 @@ td.time {
 .time label {
   background-color: #fed;
   padding: 2px 6px;
-  border: 1px solid #aaa;
   font-weight: bold;
-  font-size: 1.5vw;
-  /* line-height: 1; */
   position: relative;
-  top: -1.125vw;
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 1vw;
+  top: -0.75vw;
 }
 
 .timeAM {
@@ -80,25 +91,28 @@ td.cell,
 th.cell,
 th.weekday-header {
   padding: 0px;
-  > p {
-    margin: 0;
-    line-height: 1;
-  }
+}
+
+.weekday-header p {
+  margin: 4px;
+}
+
+.cell p {
+  margin: 0;
 }
 
 .class-cell {
   background-color: #eaf5ff;
   color: #000000;
   font-weight: bold;
+  /* border-radius: 10px; */
 }
 
 .class-cell .class-text {
-  /* font-size: 14px; */
   margin: 0;
 }
 
 .class-cell .class-code {
-  /* font-size: 14px; */
   font-weight: normal;
   color: #333;
 }

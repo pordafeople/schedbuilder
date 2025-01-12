@@ -8,6 +8,14 @@ export type Time = {
 
 export const TIME_NOON = { hour: 12, minute: 0 }
 
+export function time_eq(a: Time, b: Time): boolean {
+    return a.hour === b.hour && a.minute === b.minute
+}
+
+export function time_is_noon(time: Time): boolean {
+    return time_eq(time, TIME_NOON)
+}
+
 function parse_time(text: string): Time {
     const re = /(\d+):(\d+)([AP])/
     const match = text.match(re)!

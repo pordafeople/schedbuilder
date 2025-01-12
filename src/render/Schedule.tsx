@@ -1,7 +1,13 @@
 import { PropsWithChildren, useContext } from 'react'
 import { DisplayDataContext } from '../App'
 import './Schedule.css'
-import { Time, time_str, TimeMinutes, WEEKDAYS } from '../process/parse'
+import {
+  Time,
+  time_is_noon,
+  time_str,
+  TimeMinutes,
+  WEEKDAYS,
+} from '../process/parse'
 import {
   ScheduleRow,
   ScheduleTable,
@@ -14,7 +20,7 @@ function compute_height(duration: TimeMinutes): number {
 }
 
 function compute_font_size(duration: TimeMinutes): number {
-  return Math.min(72, duration) / 30
+  return Math.min(90, duration) / 30
   // return Math.min(30, duration) / 60
 }
 
@@ -83,6 +89,7 @@ function ScheduleRowDisplay({ time, duration, columns }: ScheduleRow) {
   const height = `${compute_height(duration)}vw`
   return (
     <tr
+      className={time_is_noon(time) ? 'noon' : ''}
       style={{
         minHeight: height,
         height,

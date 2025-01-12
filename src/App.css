@@ -3,6 +3,11 @@ textarea {
   width: 63vw;
 }
 
+.error {
+  background-color: #440;
+  border: 4px solid red;
+}
+
 .render-container {
   /* background color is light mode by default and is customizable */
   /* background-color: #caf; */

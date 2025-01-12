@@ -6,6 +6,8 @@ export type Time = {
     minute: number
 }
 
+export const TIME_NOON = { hour: 12, minute: 0 }
+
 function parse_time(text: string): Time {
     const re = /(\d+):(\d+)([AP])/
     const match = text.match(re)!

@@ -1,15 +1,16 @@
 import {
-    minutes_time,
     SisData,
     ClassData,
+    ClassPeriod,
     Time,
+    TIME_NOON,
     time_minutes,
     TimeMinutes,
-    weekday_index,
-    WeekdayIndex,
+    minutes_time,
     Weekday,
     WEEKDAYS,
-    ClassPeriod,
+    WeekdayIndex,
+    weekday_index,
 } from './parse'
 
 export type TimeSlot = {
@@ -66,7 +67,7 @@ function key_sort_dedup<T>(array: T[], key: (item: T) => number): number[] {
 }
 
 function get_times(data: SisData): TimeMinutes[] {
-    const times: Time[] = []
+    const times: Time[] = [TIME_NOON]
     for (const class_data of data.classes) {
         for (const slot of class_data.schedule) {
             times.push(slot.start)

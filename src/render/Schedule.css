@@ -48,17 +48,26 @@ textarea {
 
 /* Time column styles */
 td.time {
-  font-weight: bold;
   background-color: #f8f9fa;
   padding: 2px;
+  vertical-align: top;
+}
+
+/* FIXME: offset breaks at low screen width */
+.time label {
+  font-weight: bold;
+  font-size: 1.5vw;
+  /* line-height: 1; */
+  position: relative;
+  top: -1vw;
 }
 
 .timeAM {
-  color: #048;
+  color: #026;
 }
 
 .timePM {
-  color: #804;
+  color: #602;
 }
 
 /* Cell types */
@@ -68,6 +77,7 @@ th.weekday-header {
   padding: 0px;
   > p {
     margin: 0;
+    line-height: 1;
   }
 }
 

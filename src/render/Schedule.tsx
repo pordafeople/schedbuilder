@@ -132,17 +132,15 @@ function WeekdaysHeader({
 
 function Schedule({ weekday_config, table }: ScheduleTable) {
   return (
-    <div>
-      <div className="schedule-container">
-        <table className="main-container">
-          <WeekdaysHeader time={table[0].time} config={weekday_config} />
-          <tbody>
-            {table.map((row) => (
-              <ScheduleRowDisplay key={time_str(row.time)} {...row} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="schedule-container">
+      <table className="main-container">
+        <WeekdaysHeader time={table[0].time} config={weekday_config} />
+        <tbody>
+          {table.map((row) => (
+            <ScheduleRowDisplay key={time_str(row.time)} {...row} />
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

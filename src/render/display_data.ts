@@ -58,7 +58,7 @@ export type DisplayData = {
 }
 
 export const DISPLAY_DATA_DEFAULT: DisplayData = {
-    bg_color: '#222',
+    bg_color: '#caf',
     time_colors: { am: '#feb', pm: '#edf' },
     bar_color: '#a8c',
     weekdays: {},

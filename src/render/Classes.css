@@ -1,4 +1,5 @@
 .class-table {
+  border-collapse: collapse;
   width: 100%;
   height: 20%;
   color: black;
@@ -7,6 +8,7 @@
 }
 
 tr.class td {
+  border: 2px solid #222;
   padding: 6px;
 }
 

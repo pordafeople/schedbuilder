@@ -5,10 +5,11 @@
   color: black;
   font-weight: bold;
   font-size: 1vw;
+  border: 2px solid #222;
 }
 
-tr.class td {
-  border: 2px solid #222;
+.class-table td {
+  border: 1px solid #aaa;
   padding: 6px;
 }
 

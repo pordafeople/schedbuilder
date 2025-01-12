@@ -9,21 +9,26 @@ export type ColorSet = {
 }
 
 export type WeekdayColors = Record<Weekday, ColorSet>
-export const WEEKDAY_COLORS_DEFAULT: WeekdayColors = {
-    S: { light: '#fee', normal: '#f99' },
-    M: { light: '#fff', normal: '#ccc' },
-    T: { light: '#eee', normal: '#aaa' },
-    W: { light: '#fff', normal: '#ccc' },
-    Th: { light: '#eee', normal: '#aaa' },
-    F: { light: '#fff', normal: '#ccc' },
-    Sa: { light: '#eef', normal: '#99f' },
+export function weekday_colors_default(): WeekdayColors {
+    return {
+        S: { light: '#fee', normal: '#f99' },
+        M: { light: '#fff', normal: '#ccc' },
+        T: { light: '#eee', normal: '#aaa' },
+        W: { light: '#fff', normal: '#ccc' },
+        Th: { light: '#eee', normal: '#aaa' },
+        F: { light: '#fff', normal: '#ccc' },
+        Sa: { light: '#eef', normal: '#99f' },
+    }
 }
 export function get_weekday_colors(_config: WeekdayConfig): WeekdayColors {
-    // no logic here
-    return WEEKDAY_COLORS_DEFAULT
+    // is_pe_day(weekday) ? display_data.pe_color
+    return weekday_colors_default()
 }
 
 export type ClassColors = Record<ClassCode, ColorSet>
+
+// FOOTGUN: constants are not actually constant. they can be modified.
+// i should read more about typescript.
 const PALETTE_DEFAULT = [
     { light: '#faa', normal: '#f88' },
     { light: '#fca', normal: '#ea8' },
@@ -58,18 +63,20 @@ export type DisplayData = {
     classes: ClassColors
 }
 
-export const DISPLAY_DATA_DEFAULT: DisplayData = {
-    bg_color: '#a8d',
-    time_colors: { am: '#feb', pm: '#edf' },
-    bar_color: '#99f',
-    pe_color: null,
-    weekdays: {},
-    classes: {},
+export function display_data_default(): DisplayData {
+    return {
+        bg_color: '#a8d',
+        time_colors: { am: '#feb', pm: '#edf' },
+        bar_color: '#99f',
+        pe_color: null,
+        weekdays: {},
+        classes: {},
+    }
 }
 
 export function get_display_data(data: SisTableData): DisplayData {
     return {
-        ...DISPLAY_DATA_DEFAULT,
+        ...display_data_default(),
         weekdays: get_weekday_colors(data.schedule.weekday_config),
         classes: get_class_colors(data.classes),
     }

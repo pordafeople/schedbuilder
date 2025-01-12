@@ -130,9 +130,7 @@ function WeekdaysHeader({
             key={weekday}
             className={`weekday-header${is_pe_day(weekday) ? ' pe' : ''}`}
             style={{
-              backgroundColor:
-                // (is_pe_day(weekday) ? display_data.pe_color : null) ??
-                display_data.weekdays[weekday].normal,
+              backgroundColor: display_data.weekdays[weekday].normal,
             }}
           >
             {/* <p>{`${weekday}${is_pe_day(weekday) ? ' (PE)' : ''}`}</p> */}

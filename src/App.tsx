@@ -8,14 +8,15 @@ import Remarks from './process/Remarks'
 import Schedule from './render/Schedule'
 import Classes from './render/Classes'
 import {
-  DISPLAY_DATA_DEFAULT,
   DisplayData,
+  display_data_default,
   get_display_data,
 } from './render/display_data'
 import ImageRenderer from './output/ImageRenderer'
 
-export const DisplayDataContext =
-  createContext<DisplayData>(DISPLAY_DATA_DEFAULT)
+export const DisplayDataContext = createContext<DisplayData>(
+  display_data_default(),
+)
 
 function App() {
   const [text, setText] = useState(sample_text)

@@ -26,5 +26,5 @@ pe@addu.edu.ph2/2
 theo@addu.edu.ph3/3
 
 00-000ME 123BREAK TIME (REAL)* 10:30A-1:30P Wherever tbh MW *I., ME. MYSELF.
-me@addu.edu.ph3/3
+MeMyselfAnd1@addu.edu.ph3/3
 `

@@ -78,9 +78,9 @@ function TimeSlotDisplay({ tile }: { tile: TimeSlot }) {
         </>
       ) : data.type === 'bar' ? (
         <p className="bar-text">{data.text}</p>
-      ) : (
+      ) : data.type === 'empty' ? (
         <span className="empty-dot"></span>
-      )}
+      ) : null}
     </td>
   )
 }

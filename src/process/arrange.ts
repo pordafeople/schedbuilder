@@ -24,13 +24,27 @@ export type TimeSlot = {
         | { type: 'empty' }
 }
 
-function empty_slot(weekday: Weekday, duration: TimeMinutes): TimeSlot {
+function time_slot_empty(weekday: Weekday, duration: TimeMinutes): TimeSlot {
     return {
         weekday,
         rowspan: 1,
         colspan: 1,
         duration,
         data: { type: 'empty' },
+    }
+}
+
+function time_slot_bar(
+    weekday: Weekday,
+    duration: TimeMinutes,
+    text: string,
+): TimeSlot {
+    return {
+        weekday,
+        rowspan: 1,
+        colspan: 7,
+        duration,
+        data: { type: 'bar', text },
     }
 }
 
@@ -104,7 +118,9 @@ function arrange_schedule(data: SisData): ScheduleTable {
         table.push({
             time: minutes_time(prev_minutes),
             duration: duration,
-            columns: WEEKDAYS.map((weekday) => empty_slot(weekday, duration)),
+            columns: WEEKDAYS.map((weekday) =>
+                time_slot_empty(weekday, duration),
+            ),
         })
         prev_minutes = time
     }
@@ -140,6 +156,9 @@ function arrange_schedule(data: SisData): ScheduleTable {
     }
     // TODO: post-process the table to detect lunch break
     // what do you mean saturday's lunch break is different from the weekdays'
+    table[table.length - 1].columns = [
+        time_slot_bar('M', DEFAULT_SLOT_DURATION, 'End of Class'),
+    ]
     return {
         weekday_config: WEEKDAY_CONFIG_DEFAULT,
         table,

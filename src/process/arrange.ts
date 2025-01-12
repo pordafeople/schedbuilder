@@ -62,10 +62,13 @@ export type WeekdayConfig = {
     end: WeekdayIndex
     pe_days: Set<Weekday>
 }
-export const WEEKDAY_CONFIG_DEFAULT: WeekdayConfig = {
-    start: 1,
-    end: 7,
-    pe_days: new Set(),
+
+export function weekday_config_default(): WeekdayConfig {
+    return {
+        start: 1,
+        end: 7,
+        pe_days: new Set(),
+    }
 }
 
 export type ScheduleTable = {
@@ -99,7 +102,7 @@ export type ClassList = ClassData[]
 // TODO: remove unnecessary weekdays
 
 function arrange_schedule(data: SisData): ScheduleTable {
-    let weekday_config = WEEKDAY_CONFIG_DEFAULT
+    let weekday_config = weekday_config_default()
     const table: ScheduleRow[] = []
 
     // get all the unique timestamps in the data and sort them

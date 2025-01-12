@@ -53,14 +53,16 @@ export type DisplayData = {
     bg_color: Color
     time_colors: TimeColors
     bar_color: Color
+    pe_color: Color | null
     weekdays: WeekdayColors
     classes: ClassColors
 }
 
 export const DISPLAY_DATA_DEFAULT: DisplayData = {
-    bg_color: '#caf',
+    bg_color: '#a8d',
     time_colors: { am: '#feb', pm: '#edf' },
-    bar_color: '#a8c',
+    bar_color: '#99f',
+    pe_color: null,
     weekdays: {},
     classes: {},
 }

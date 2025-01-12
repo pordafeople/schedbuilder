@@ -84,7 +84,6 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
 export type ClassSchedule = ClassPeriod[]
 
 function parse_schedule(text: string): ClassSchedule {
-    console.log(text)
     return [...text.matchAll(period_regex)].map(parse_period)
 }
 
@@ -102,11 +101,11 @@ export type Teacher = {
 
 function parse_teacher(name: string, emails: string): Teacher {
     const re = /([^,]+), (.+)/
-    const match = name.match(re) || null
+    const match = name.match(re)
     return {
-        family_name: match?.[1] || '<???>',
-        given_name: match?.[2] || '<???>',
-        emails: parse_emails(emails || '<no email given>'),
+        family_name: match?.[1] ?? '<???>',
+        given_name: match?.[2] ?? '<???>',
+        emails: parse_emails(emails ?? '<no email given>'),
     }
 }
 
@@ -131,8 +130,12 @@ function parse_class(match: RegExpExecArray): ClassData {
         subject: match[2],
         title: match[3],
         schedule: parse_schedule(match[4]),
-        teacher: parse_teacher(match[5] || '', match[6]),
+        teacher: parse_teacher(match[5] ?? '', match[6]),
     }
+}
+
+export function class_is_pe(class_data: ClassData): boolean {
+    return class_data.subject.startsWith('PE')
 }
 
 export type SisData = {

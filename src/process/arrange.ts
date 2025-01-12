@@ -1,6 +1,7 @@
 import {
     SisData,
     ClassData,
+    class_is_pe,
     ClassPeriod,
     Time,
     TIME_NOON,
@@ -59,10 +60,12 @@ export type ScheduleRow = {
 export type WeekdayConfig = {
     start: WeekdayIndex
     end: WeekdayIndex
+    pe_days: Set<Weekday>
 }
 export const WEEKDAY_CONFIG_DEFAULT: WeekdayConfig = {
     start: 1,
     end: 7,
+    pe_days: new Set(),
 }
 
 export type ScheduleTable = {
@@ -96,6 +99,7 @@ export type ClassList = ClassData[]
 // TODO: remove unnecessary weekdays
 
 function arrange_schedule(data: SisData): ScheduleTable {
+    let weekday_config = WEEKDAY_CONFIG_DEFAULT
     const table: ScheduleRow[] = []
 
     // get all the unique timestamps in the data and sort them
@@ -104,7 +108,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
     // no timestamps means no data
     if (times.length === 0) {
         return {
-            weekday_config: WEEKDAY_CONFIG_DEFAULT,
+            weekday_config,
             table,
         }
     }
@@ -134,6 +138,9 @@ function arrange_schedule(data: SisData): ScheduleTable {
             const rowspan = end_row - start_row
 
             for (const weekday of weekdays) {
+                if (class_is_pe(class_data)) {
+                    weekday_config.pe_days.add(weekday)
+                }
                 const col = weekday_index(weekday)
                 // add the main subject tile
                 table[start_row].columns[col] = {
@@ -160,7 +167,7 @@ function arrange_schedule(data: SisData): ScheduleTable {
         time_slot_bar('M', DEFAULT_SLOT_DURATION, 'End of Class'),
     ]
     return {
-        weekday_config: WEEKDAY_CONFIG_DEFAULT,
+        weekday_config,
         table,
     }
 }

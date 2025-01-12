@@ -5,7 +5,7 @@ import { ClassData } from '../process/parse'
 import { ClassList } from '../process/arrange'
 
 function ClassDisplay({ code, subject, title, teacher }: ClassData) {
-  const color = useContext(DisplayDataContext).classes[code] || {
+  const color = useContext(DisplayDataContext).classes[code] ?? {
     light: '#aaa',
     normal: '#888',
   }

@@ -80,6 +80,16 @@ td.time {
   color: #248;
 }
 
+/* PE weekday styles */
+th.weekday-header.pe {
+  border: 4px solid #333;
+}
+
+td.class-cell.pe {
+  border: 4px solid #333;
+}
+
+
 /* Cell types */
 td.cell,
 th.cell,
@@ -90,6 +100,7 @@ th.weekday-header {
 .weekday-header p {
   margin: 4px;
 }
+
 
 .cell p {
   margin: 0;

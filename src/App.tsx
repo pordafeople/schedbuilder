@@ -19,7 +19,7 @@ export const DisplayDataContext =
 function App() {
   const [text, setText] = useState(sample_text)
 
-  const sis_data = parse_sis(text)
+  const { sis_data, err } = parse_sis(text)
   const sis_table_data = arrange(sis_data)
   const display_data = get_display_data(sis_table_data)
 
@@ -30,6 +30,12 @@ function App() {
       <div>
         <h2>Input</h2>
         <InputBox text={text} setText={setText} />
+        {err ? (
+          <div className="error">
+            <h1>WARNING</h1>
+            <textarea rows={err.split('\n').length} value={err} readOnly />
+          </div>
+        ) : null}
       </div>
       <div>
         <h2>Rendering</h2>

@@ -84,14 +84,14 @@ function parse_period(match: RegExpExecArray): ClassPeriod {
 export type ClassSchedule = ClassPeriod[]
 
 function parse_schedule(text: string): ClassSchedule {
+    console.log(text)
     return [...text.matchAll(period_regex)].map(parse_period)
 }
 
 export type Emails = string[]
 
 function parse_emails(emails: string): Emails {
-    const re = /[\w]+@[\w.]+/g
-    return [...emails.matchAll(re)].map((match) => match[0])
+    return emails.split(';')
 }
 
 export type Teacher = {
@@ -101,12 +101,12 @@ export type Teacher = {
 }
 
 function parse_teacher(name: string, emails: string): Teacher {
-    const re = /([\wÑ\.]+), ([\wÑ\. ]+)(?:\n([\w@ .]+))?/
+    const re = /([^,]+), (.+)/
     const match = name.match(re) || null
     return {
         family_name: match?.[1] || '<???>',
         given_name: match?.[2] || '<???>',
-        emails: parse_emails(emails || ''),
+        emails: parse_emails(emails || '<no email given>'),
     }
 }
 
@@ -124,7 +124,7 @@ export type ClassData = {
 }
 
 const class_regex =
-    /(\d+-\d+)\s*(\w+ \d+)\s*([\w, \-\d()]+)\s*\* ((?:.+? \*)+)\s*([\wÑ\., ]+)?\s*([\w@\.;]+)?\s*(\d)\/(\d)\s*/g
+    /(\d+-\d+)\s*(\w+ \d+)\s*([^*]+)\s*\* ((?:.+? \*)+)\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
 function parse_class(match: RegExpExecArray): ClassData {
     return {
         code: match[1],
@@ -139,8 +139,21 @@ export type SisData = {
     classes: ClassData[]
 }
 
-export function parse_sis(text: string): SisData {
-    text = text.replace(/\r/g, '')
+export function parse_sis(text: string): { sis_data: SisData; err?: string } {
+    text = '\n' + text.replace(/\r/g, '') + '\n'
     const classes = [...text.matchAll(class_regex)].map(parse_class)
-    return { classes }
+    const pasted_subjects = [...text.matchAll(/\n\d/g)].length
+    let err = undefined
+    if (classes.length !== pasted_subjects) {
+        err =
+            `There are missing subjects in the output.\n` +
+            `\n` +
+            `- Input subjects: ${pasted_subjects} (double check)\n` +
+            `- Detected subjects: ${classes.length}\n` +
+            `\n` +
+            `The number of input subjects was determined by the number of slashes '/' in the input box.\n` +
+            `\n` +
+            `Please report this and include the data for each subject that went missing.`
+    }
+    return { sis_data: { classes }, err }
 }

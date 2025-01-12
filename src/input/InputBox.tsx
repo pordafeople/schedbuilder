@@ -10,7 +10,7 @@ function InputBox({ text, setText }: InputBoxProps) {
         name="input_box"
         id="input_box"
         cols={160}
-        rows={20}
+        rows={24}
         value={text}
         onChange={(e) => setText(e.target.value)}
       />

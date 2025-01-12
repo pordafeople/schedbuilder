@@ -101,7 +101,7 @@ export type Teacher = {
 }
 
 function parse_teacher(name: string, emails: string): Teacher {
-    const re = /([\w\.]+), ([\w\. ]+)(?:\n([\w@ .]+))?/
+    const re = /([\wÑ\.]+), ([\wÑ\. ]+)(?:\n([\w@ .]+))?/
     const match = name.match(re) || null
     return {
         family_name: match?.[1] || '<???>',
@@ -124,7 +124,7 @@ export type ClassData = {
 }
 
 const class_regex =
-    /(\d+-\d+)\s*(\w+ \d+)\s*([\w, \-\d()]+)\s*\* ((?:.+? \*)+)\s*([\w\., ]+)?\s*([a-z@\.;]+)?\s*(\d)\/(\d)\s*/g
+    /(\d+-\d+)\s*(\w+ \d+)\s*([\w, \-\d()]+)\s*\* ((?:.+? \*)+)\s*([\wÑ\., ]+)?\s*([a-z@\.;]+)?\s*(\d)\/(\d)\s*/g
 function parse_class(match: RegExpExecArray): ClassData {
     return {
         code: match[1],

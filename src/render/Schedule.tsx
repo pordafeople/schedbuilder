@@ -55,9 +55,12 @@ function TimeDisplay({
   )
 }
 
-function SlotDisplay({ tile }: { tile: TimeSlot }) {
+function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
   const { weekday, rowspan, colspan, duration, data } = tile
   const colors = useContext(DisplayDataContext)
+  const class_name = `cell ${data.type}-cell ${
+    data.type === 'class' && class_is_pe(data.class_data) ? 'pe' : ''
+  } ${is_edge ? 'right-edge' : ''}`
   const bg_color =
     data.type === 'class'
       ? colors.classes[data.class_data.code].normal
@@ -71,9 +74,7 @@ function SlotDisplay({ tile }: { tile: TimeSlot }) {
   return (
     <td
       key={weekday}
-      className={`cell ${data.type}-cell ${
-        data.type === 'class' && class_is_pe(data.class_data) ? 'pe' : ''
-      }`}
+      className={class_name}
       colSpan={colspan}
       rowSpan={rowspan}
       style={{
@@ -109,11 +110,16 @@ function RowDisplay({ time, duration, columns }: ScheduleRow) {
       <TimeDisplay time={time} duration={duration}>
         <label>{time_str(time)}</label>
       </TimeDisplay>
-      {columns
-        .filter((slot) => slot !== null)
-        .map((tile) => (
-          <SlotDisplay key={tile.weekday} tile={tile} />
-        ))}
+      {columns.map((tile, index, arr) =>
+        // NOTE: does not respect WeekdayConfig yet
+        tile !== null ? (
+          <SlotDisplay
+            key={tile.weekday}
+            tile={tile}
+            is_edge={index === arr.length - 1}
+          />
+        ) : null,
+      )}
     </tr>
   )
 }

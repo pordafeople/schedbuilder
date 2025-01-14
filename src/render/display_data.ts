@@ -66,7 +66,7 @@ export type DisplayData = {
 export function display_data_default(): DisplayData {
     return {
         bg_color: '#a8d',
-        time_colors: { am: '#feb', pm: '#edf' },
+        time_colors: { am: '#feb0', pm: '#edf0' }, // both of these are transparent now
         bar_color: '#99f',
         pe_color: null,
         weekdays: {},

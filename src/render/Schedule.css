@@ -29,7 +29,8 @@
 .main-container td:nth-child(2) {
   border-left: 2px solid #333;
 }
-.main-container td:nth-last-child(1) {
+/* html2canvas image renderer does not respect null slots in :nth-last-child */
+.main-container td.right-edge {
   border-right: 2px solid #333;
 }
 

@@ -19,9 +19,9 @@ export const DisplayDataContext = createContext<DisplayData>(
 )
 
 function App() {
-  const [text, setText] = useState(sample_text)
+  const [text, setText] = useState('')
 
-  const { sis_data, err } = parse_sis(text)
+  const { sis_data, err } = parse_sis(text || sample_text)
   const sis_table_data = arrange(sis_data)
   const display_data = get_display_data(sis_table_data)
 

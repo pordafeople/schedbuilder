@@ -5,6 +5,7 @@
   align-items: center;
   font-family: Arial, sans-serif;
   margin-bottom: 30px;
+  padding-left: 4vw;
 }
 
 /* Main table styles */
@@ -16,11 +17,11 @@
 }
 
 .main-container td {
-  border-top: 1px solid #ccc;
   padding: 10px;
 }
-.main-container thead td.time {
-  border-top: none;
+.main-container tbody td.time {
+  border-top: 1px solid #ccc;
+  width: 2vw;
 }
 .main-container td:not(.time) {
   border: 1px solid #ccc;
@@ -51,13 +52,12 @@
 }
 
 /* Noon row styles */
-.main-container .noon td {
+.main-container tbody tr.noon td {
   border-top: 2px solid #333;
 }
 
 tr.noon .time label {
-  border: 1px solid #222;
-  top: -1.125vw;
+  border: 2px solid #222;
 }
 
 /* Time column styles */
@@ -65,20 +65,18 @@ td.time {
   background-color: #f8f9fa;
   padding: 2px;
   vertical-align: top;
-  border-right: 2px solid #333;
 }
 
 /* FIXME: offset breaks at low screen width */
 .main-container .time label {
   background-color: #fed;
-  padding: 2px 6px;
+  padding: 0px 6px;
   font-weight: bold;
-  position: relative;
+  position: absolute;
 
   border: 1px solid #aaa;
-  border-radius: 5px;
-  font-size: 1.5vw;
-  top: -1.125vw;
+  border-radius: 0.5vw;
+  transform: translate(-100%, -50%);
 }
 
 .timeAM {

@@ -18,7 +18,7 @@ import {
 } from '../process/arrange'
 
 function compute_height(duration: TimeMinutes): number {
-  return duration / 20
+  return duration / 16
 }
 
 function compute_font_size(duration: TimeMinutes): number {
@@ -28,24 +28,30 @@ function compute_font_size(duration: TimeMinutes): number {
 
 function TimeDisplay({
   time,
-  duration: _duration,
+  duration,
   children,
 }: PropsWithChildren<{
   time: Time
   duration: TimeMinutes
 }>) {
   const display_data = useContext(DisplayDataContext)
+  const font_size = compute_font_size(duration * 2) / 2
   const { class_name, bg_color } =
     time.hour < 12
       ? { class_name: 'timeAM', bg_color: display_data.time_colors.am }
       : { class_name: 'timePM', bg_color: display_data.time_colors.pm }
   return (
-    <td
-      className={`cell time ${class_name}`}
-      style={{ backgroundColor: bg_color }}
-    >
-      {children}
-    </td>
+    <>
+      <td
+        className={`cell time ${class_name}`}
+        style={{
+          backgroundColor: bg_color,
+          fontSize: `${font_size}vw`,
+        }}
+      >
+        {children}
+      </td>
+    </>
   )
 }
 

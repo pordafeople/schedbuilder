@@ -123,7 +123,7 @@ export type ClassData = {
 }
 
 const class_regex =
-    /(\d+-\d+)\s*(\w+ \d+)\s*([^*]+)\s*\* ((?:.+? \*)+)\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
+    /(\d+-\d+)\s*((?:\w+ )+\d+)\s*([^*]+)\s*\* ((?:.+? \*)+)\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
 function parse_class(match: RegExpExecArray): ClassData {
     return {
         code: match[1],

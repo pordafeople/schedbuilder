@@ -145,7 +145,7 @@ export type SisData = {
 export function parse_sis(text: string): { sis_data: SisData; err?: string } {
     text = '\n' + text.replace(/[\r\t]/g, '') + '\n'
     const classes = [...text.matchAll(class_regex)].map(parse_class)
-    const pasted_subjects = [...text.matchAll(/\n\s*\d+[^@\n]+\n/g)].length
+    const pasted_subjects = [...text.matchAll(/^\s*\d+[^@\n]+$/gm)].length
     let err = undefined
     if (classes.length !== pasted_subjects) {
         err =

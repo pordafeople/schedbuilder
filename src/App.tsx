@@ -29,17 +29,27 @@ function App() {
   return (
     <DisplayDataContext.Provider value={display_data}>
       <h1>SchedBuilder</h1>
-      <p>pls double check everything i don want u to miss classes</p>
+      <p>(pls double check everything i don want u to miss classes)</p>
       <div>
         <h2>Input</h2>
+        <p>Copy your SIS table schedule into the text box</p>
+        <p>
+          (everything under CODE SUBJ. NO DESCRIPTIVE TITLE SCHEDULE UNIT
+          Required)
+        </p>
         <InputBox text={text} setText={setText} />
       </div>
       <div>
         <h2>Processing</h2>
+        <p>(you can probably ignore this part)</p>
         <Remarks sis_data={sis_data} err={err} />
       </div>
       <div>
         <h2>Rendering</h2>
+        <p>
+          (Best on a larger screen, scroll down to Image Renderer to save as
+          Image)
+        </p>
         <div
           id="render-source"
           className="render-container"
@@ -52,6 +62,7 @@ function App() {
       </div>
       <div>
         <h2>Image Renderer</h2>
+        <p>(Allows you to save your schedule as an image)</p>
         <ImageRenderer for="render-source" />
       </div>
     </DisplayDataContext.Provider>

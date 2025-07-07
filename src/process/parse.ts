@@ -158,7 +158,7 @@ export function parse_sis(text: string): { sis_data: SisData; err?: string } {
             `\n` +
             `The number of input subjects was determined by finding numbers at the start of each line.` +
             `\n` +
-            `Please report this and include the data for each subject that went missing.`
+            `Please report this and include the text you pasted.`
     }
     return { sis_data: { classes }, err }
 }

@@ -122,6 +122,7 @@ export type ClassData = {
     teacher: Teacher
 }
 
+// don't ask. read.
 const class_regex =
     /(\d+-\d+)\s*((?:\w+ )+\d+)\s*([^*]+)\s*\* ((?:.+? \*)+)\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
 function parse_class(match: RegExpExecArray): ClassData {
@@ -144,14 +145,15 @@ export type SisData = {
 
 export function parse_sis(text: string): { sis_data: SisData; err?: string } {
     text = '\n' + text.replace(/[\r\t]/g, '') + '\n'
+    // subjects begin with whitespace and a number, followed by any characters (except @ or newline, which appears for emails on separate lines)
+    const pasted_subjects = [...text.matchAll(/^\s*\d+[^@\n]+$/gm)]
     const classes = [...text.matchAll(class_regex)].map(parse_class)
-    const pasted_subjects = [...text.matchAll(/\n\s*\d+[^@\n]+\n/g)].length
     let err = undefined
-    if (classes.length !== pasted_subjects) {
+    if (pasted_subjects.length !== classes.length) {
         err =
-            `There are missing subjects/classes in the output.\n` +
+            `There are missing subjects/classes in the output, or the input detection is faulty.\n` +
             `\n` +
-            `- Detected classes in input: ${pasted_subjects} (double check)\n` +
+            `- Detected classes in input: ${pasted_subjects.length} (double check)\n` +
             `- Fully identified classes: ${classes.length}\n` +
             `\n` +
             `The number of input subjects was determined by finding numbers at the start of each line.` +

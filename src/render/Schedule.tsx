@@ -71,10 +71,11 @@ function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
       : '#f0f' // this should never happen
 
   let font_size = compute_font_size(duration) / 2
-  let display = 'block'
-  if (duration < 60) {
-    display = 'inline'
+  let separator = <br />
+  let inline = duration < 60
+  if (inline) {
     font_size *= 1.5
+    separator = <span> </span>
   }
   return (
     <td
@@ -91,30 +92,24 @@ function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
           <p
             className="class-text"
             style={{
-              display,
-              fontSize: `${font_size}vw`,
-            }}
-          >
-            {data.class_data.subject + ' '}
-          </p>
-          <p
-            className="class-code"
-            style={{
-              display,
               fontSize: `${font_size * 0.75}vw`,
             }}
           >
-            {data.class_period.room + ' '}
-          </p>
-          <p
-            className="class-time"
-            style={{
-              display,
-              fontSize: `${font_size * 0.75}vw`,
-            }}
-          >
-            {time_str(data.class_period.start)}-
-            {time_str(data.class_period.end)}
+            <span
+              className="class-text"
+              style={{
+                fontSize: `${font_size}vw`,
+              }}
+            >
+              {data.class_data.subject}
+            </span>
+            {separator}
+            <span className="class-code">{data.class_period.room}</span>
+            {separator}
+            <span className="class-time">
+              {time_str(data.class_period.start)}-
+              {time_str(data.class_period.end)}
+            </span>
           </p>
         </>
       ) : data.type === 'bar' ? (

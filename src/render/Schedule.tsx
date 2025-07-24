@@ -70,7 +70,13 @@ function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
       ? colors.weekdays[weekday].light
       : '#f0f' // this should never happen
 
-  const font_size = compute_font_size(duration) / 2
+  let font_size = compute_font_size(duration) / 2
+  let separator = <br />
+  let inline = duration < 60
+  if (inline) {
+    font_size *= 1.5
+    separator = <span> </span>
+  }
   return (
     <td
       key={weekday}
@@ -79,13 +85,32 @@ function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
       rowSpan={rowspan}
       style={{
         backgroundColor: bg_color,
-        fontSize: `${font_size}vw`,
       }}
     >
       {data.type === 'class' ? (
         <>
-          <p className="class-text">{data.class_data.subject}</p>
-          <p className="class-code">{data.class_period.room}</p>
+          <p
+            className="class-text"
+            style={{
+              fontSize: `${font_size * 0.75}vw`,
+            }}
+          >
+            <span
+              className="class-text"
+              style={{
+                fontSize: `${font_size}vw`,
+              }}
+            >
+              {data.class_data.subject}
+            </span>
+            {separator}
+            <span className="class-code">{data.class_period.room}</span>
+            {separator}
+            <span className="class-time">
+              {time_str(data.class_period.start)}-
+              {time_str(data.class_period.end)}
+            </span>
+          </p>
         </>
       ) : data.type === 'bar' ? (
         <p className="bar-text">{data.text}</p>

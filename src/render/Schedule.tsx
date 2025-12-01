@@ -63,7 +63,7 @@ function SlotDisplay({ tile, is_edge }: { tile: TimeSlot; is_edge: boolean }) {
   } ${is_edge ? 'right-edge' : ''}`
   const bg_color =
     data.type === 'class'
-      ? colors.classes[data.class_data.code].normal
+      ? colors.classes[data.class_data.subject].normal
       : data.type === 'bar'
       ? colors.bar_color
       : data.type === 'empty'

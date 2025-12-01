@@ -124,10 +124,11 @@ export type ClassData = {
 
 // don't ask. read.
 const class_regex =
-    /(\d+-\d+)\s*((?:\w+ )+\d+)\s*([^*]+)\s*\* ((?:.+? \*)+)\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
+    /(\d+-\d+)?\s*((?:\w+ )+\d+)\s*([^*]+)\s*\* ((?:.+? \*)+)?\s*([^\n]+)?\s*([^ \n]+)?\s*(\d+)\/(\d+)\s*/g
+//    <code>     <title>          <sched>       <teacher>       <email>                   <unit>
 function parse_class(match: RegExpExecArray): ClassData {
     return {
-        code: match[1],
+        code: match[1] ?? '<no class code>',
         subject: match[2],
         title: match[3],
         schedule: parse_schedule(match[4]),
@@ -146,7 +147,7 @@ export type SisData = {
 export function parse_sis(text: string): { sis_data: SisData; err?: string } {
     text = '\n' + text.replace(/[\r\t]/g, '') + '\n'
     // subjects begin with whitespace and a number, followed by any characters (except @ or newline, which appears for emails on separate lines)
-    const pasted_subjects = [...text.matchAll(/^\s*\d+[^@\n]+$/gm)]
+    const pasted_subjects = [...text.matchAll(/^.*\*/gm)]
     const classes = [...text.matchAll(class_regex)].map(parse_class)
     let err = undefined
     if (pasted_subjects.length !== classes.length) {
@@ -156,7 +157,7 @@ export function parse_sis(text: string): { sis_data: SisData; err?: string } {
             `- Detected classes in input: ${pasted_subjects.length} (double check)\n` +
             `- Fully identified classes: ${classes.length}\n` +
             `\n` +
-            `The number of input subjects was determined by finding numbers at the start of each line.` +
+            `The number of input subjects was determined by finding any lines with an asterisk '*' character.` +
             `\n` +
             `Please report this and include the text you pasted.`
     }

@@ -1,4 +1,4 @@
-import { ClassCode, Weekday } from '../process/parse'
+import { Subject, Weekday } from '../process/parse'
 import { ClassList, SisTableData, WeekdayConfig } from '../process/arrange'
 
 export type Color = string
@@ -25,7 +25,7 @@ export function get_weekday_colors(_config: WeekdayConfig): WeekdayColors {
     return weekday_colors_default()
 }
 
-export type ClassColors = Record<ClassCode, ColorSet>
+export type ClassColors = Record<Subject, ColorSet>
 
 // FOOTGUN: constants are not actually constant. they can be modified.
 // i should read more about typescript.
@@ -43,7 +43,8 @@ const PALETTE_DEFAULT = [
 ]
 export function get_class_colors(classes: ClassList): ClassColors {
     return classes.reduce((acc, class_data, index) => {
-        acc[class_data.code] = PALETTE_DEFAULT[index % PALETTE_DEFAULT.length]
+        acc[class_data.subject] =
+            PALETTE_DEFAULT[index % PALETTE_DEFAULT.length]
         return acc
     }, {} as ClassColors)
 }

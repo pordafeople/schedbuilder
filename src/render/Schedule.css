@@ -125,7 +125,8 @@ th.weekday-header {
   margin: 0;
 }
 
-.class-cell .class-code {
+.class-cell .class-code,
+.class-cell .class-time {
   font-weight: normal;
   color: #333;
 }
